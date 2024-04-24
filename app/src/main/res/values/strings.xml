@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">UnscrambleGame</string>
+    <string name="submit">submit</string>
+    <string name="skip">Skip</string>
+    <string name="hint">Enter word</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="scored">You scored: %s</string>
+    <string name="play_again">Play again</string>
+    <string name="exit">Exit</string>
+</resources>

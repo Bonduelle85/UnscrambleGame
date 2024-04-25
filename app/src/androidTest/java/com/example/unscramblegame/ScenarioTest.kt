@@ -36,6 +36,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber1() {
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "animal")
@@ -48,6 +49,7 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "20"
         )
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
     }
 
@@ -67,6 +69,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber2() {
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "aminal")
@@ -85,6 +88,7 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "10"
         )
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
     }
 
@@ -96,6 +100,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber3() {
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.clickSkip()
@@ -104,6 +109,7 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "0"
         )
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
     }
 
@@ -118,6 +124,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber4() {
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "animal")
@@ -130,6 +137,7 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "20"
         )
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "auot")
@@ -153,6 +161,7 @@ class ScenarioTest {
             word = "anecdote".reversed(),
             score = "0"
         )
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
     }
 
@@ -168,6 +177,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber5() {
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "anim")
@@ -191,6 +201,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber6() {
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "animal")
@@ -203,6 +214,7 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "20"
         )
+        gamePage.checkInputEmpty()
         gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "auot")

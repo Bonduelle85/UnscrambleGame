@@ -151,7 +151,7 @@ class GameViewModelTest {
         expectedUiState = UiState.Match
         assertEquals(expectedUiState, actualUiState)
 
-        actualUiState = viewModel.submit(guess = "na")
+        actualUiState = viewModel.submit(guess = "an")
         expectedUiState = UiState.Question(
             counter = "2/2",
             word = "EU".reversed(),
@@ -186,7 +186,7 @@ class GameViewModelTest {
         actualUiState = viewModel.playAgain()
         expectedUiState = UiState.Question(
             counter = "1/2",
-            word = "XY".reversed(),
+            word = "EU".reversed(),
             score = "0"
         )
         assertEquals(expectedUiState, actualUiState)

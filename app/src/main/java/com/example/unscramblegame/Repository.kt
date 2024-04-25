@@ -11,37 +11,63 @@ interface Repository {
     fun next()
     fun reset()
 
-    class Base : Repository {
+    class Base(
+        dataSource: DataSource = DataSource(),
+        private val max: Int = 2
+    ) : Repository {
+
+        private val list = dataSource.allWords.toList()
+
+        private var currentIndex = 0 // 0, 1, 2, 3, 4, 5, ... 1000
+        private var uiIndex = 1 // 1, 2, 1, 2, 1, 2 // 1 .. max
+        private var score: Int = 0
+
+        private var failed: Boolean = false
         override fun currentWord(): String {
-            TODO("Not yet implemented")
+            return list[currentIndex]
         }
 
         override fun currentScore(): String {
-            TODO("Not yet implemented")
+            return score.toString()
         }
 
         override fun currentCounter(): String {
-            TODO("Not yet implemented")
+            return "$uiIndex/$max"
         }
 
         override fun sameLength(userInput: String): Boolean {
-            TODO("Not yet implemented")
+            return userInput.length == currentWord().length
         }
 
         override fun check(userInput: String): Boolean {
-            TODO("Not yet implemented")
+            return if (currentWord().equals(userInput, ignoreCase = true)) {
+                score += if (failed) 10 else 20
+                true
+            } else {
+                failed = true
+                false
+            }
         }
 
         override fun isLast(): Boolean {
-            TODO("Not yet implemented")
+            return uiIndex == max
         }
 
         override fun next() {
-            TODO("Not yet implemented")
+            currentIndex++
+            if (currentIndex == list.size)
+                currentIndex = 0
+            uiIndex++
+            failed = false
         }
 
         override fun reset() {
-            TODO("Not yet implemented")
+            currentIndex++
+            if (currentIndex == list.size)
+                currentIndex = 0
+            score = 0
+            uiIndex = 1
+            failed = false
         }
 
     }

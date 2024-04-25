@@ -5,7 +5,6 @@ import android.widget.LinearLayout
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Matcher
 
 class GamePage(
@@ -24,7 +23,7 @@ class GamePage(
     private val scoreUi = ScoreUi(rootId, rootClass)
     private val gameOverUi = GameOverUi()
 
-    init {
+    fun checkInputEmpty() {
         inputUi.checkEmpty()
     }
 

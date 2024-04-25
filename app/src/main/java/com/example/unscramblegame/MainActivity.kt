@@ -1,6 +1,5 @@
 package com.example.unscramblegame
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.TextView
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = GameViewModel()
+        val viewModel = GameViewModel(Repository.Base(max = 10)) // max = 2 for ScenarioTest
 
         val gameOverDialog: UpdateScore = GameOverDialog(this, viewModel)
 

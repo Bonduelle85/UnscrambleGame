@@ -29,8 +29,6 @@ class InputUi(rootId: Matcher<View>, rootClass: Matcher<View>) {
         allOf(
             withId(R.id.inputEditText),
             isAssignableFrom(TextInputEditText::class.java),
-            withParent(withId(R.id.inputLayout)),
-            withParent(isAssignableFrom(TextInputLayout::class.java))
         )
     )
 

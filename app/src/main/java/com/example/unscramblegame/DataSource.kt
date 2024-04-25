@@ -1,7 +1,7 @@
 package com.example.unscramblegame
 
 class DataSource {
-    private val allWords: Set<String> =
+    val allWords: Set<String> =
         setOf(
             "animal",
             "auto",

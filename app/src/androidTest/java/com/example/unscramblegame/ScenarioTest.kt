@@ -181,7 +181,7 @@ class ScenarioTest {
     }
 
     /**
-     * Number 6: GameOver after submit and play again
+     * Number 6: GameOver after submit and exit
      *
      * Run Testcase number 1
      * Run TestCase number 2

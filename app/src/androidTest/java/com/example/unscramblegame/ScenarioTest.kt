@@ -3,6 +3,7 @@ package com.example.unscramblegame
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.unscramblegame.presentation.MainActivity
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -37,8 +38,12 @@ class ScenarioTest {
     @Test
     fun caseNumber1() {
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "animal")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
@@ -48,6 +53,8 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "20"
         )
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
         gamePage.checkQuestionState()
     }
 
@@ -68,14 +75,22 @@ class ScenarioTest {
     @Test
     fun caseNumber2() {
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "aminal")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
         gamePage.checkErrorState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkErrorState()
 
         gamePage.inputWord(text = "animal")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
@@ -85,6 +100,8 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "10"
         )
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
         gamePage.checkQuestionState()
     }
 
@@ -97,6 +114,8 @@ class ScenarioTest {
     @Test
     fun caseNumber3() {
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.clickSkip()
         gamePage = GamePage(
@@ -104,6 +123,8 @@ class ScenarioTest {
             word = "auto".reversed(),
             score = "0"
         )
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
         gamePage.checkQuestionState()
     }
 
@@ -119,8 +140,12 @@ class ScenarioTest {
     @Test
     fun caseNumber4() {
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "animal")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
@@ -131,19 +156,29 @@ class ScenarioTest {
             score = "20"
         )
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "auot")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
         gamePage.checkErrorState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkErrorState()
 
         gamePage.inputWord(text = "auto")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
 
         val gameOverPage = GameOverPage("30")
+        gameOverPage.check()
+        scenarioRule.scenario.recreate()
         gameOverPage.check()
 
         gameOverPage.clickPlayAgain()
@@ -153,6 +188,8 @@ class ScenarioTest {
             word = "anecdote".reversed(),
             score = "0"
         )
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
         gamePage.checkQuestionState()
     }
 
@@ -169,14 +206,22 @@ class ScenarioTest {
     @Test
     fun caseNumber5() {
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "anim")
+        gamePage.checkInsufficientState()
+        scenarioRule.scenario.recreate()
         gamePage.checkInsufficientState()
 
         gamePage.inputWord(text = "animal")
         gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
 
         gamePage.inputWord(text = "animalwr")
+        gamePage.checkInsufficientState()
+        scenarioRule.scenario.recreate()
         gamePage.checkInsufficientState()
     }
 
@@ -192,9 +237,14 @@ class ScenarioTest {
     @Test
     fun caseNumber6() {
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "animal")
         gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
 
         gamePage.clickSubmit()
 
@@ -204,20 +254,31 @@ class ScenarioTest {
             score = "20"
         )
         gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
 
         gamePage.inputWord(text = "auot")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
         gamePage.checkErrorState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkErrorState()
 
         gamePage.inputWord(text = "auto")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
         gamePage.checkMatchState()
 
         gamePage.clickSubmit()
 
         val gameOverPage = GameOverPage("30")
         gameOverPage.check()
+        scenarioRule.scenario.recreate()
+        gameOverPage.check()
+
 
         gameOverPage.clickExit()
         assertTrue(scenarioRule.scenario.state != Lifecycle.State.RESUMED)

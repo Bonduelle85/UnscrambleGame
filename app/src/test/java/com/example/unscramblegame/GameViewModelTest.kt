@@ -1,6 +1,9 @@
 package com.example.unscramblegame
 
-import org.junit.Assert.*
+import com.example.unscramblegame.data.Repository
+import com.example.unscramblegame.presentation.GameViewModel
+import com.example.unscramblegame.presentation.UiState
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 

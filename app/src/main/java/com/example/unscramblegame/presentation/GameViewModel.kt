@@ -1,4 +1,6 @@
-package com.example.unscramblegame
+package com.example.unscramblegame.presentation
+
+import com.example.unscramblegame.data.Repository
 
 class GameViewModel(private val repository: Repository) : PlayAgain {
 

@@ -7,6 +7,7 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -19,8 +20,7 @@ class InputUi(rootId: Matcher<View>, rootClass: Matcher<View>) {
         allOf(
             withId(R.id.inputLayout),
             isAssignableFrom(TextInputLayout::class.java),
-            rootId,
-            rootClass
+            withParent(withId(R.id.customInput))
         )
     )
 

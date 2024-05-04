@@ -7,7 +7,6 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -32,15 +31,16 @@ class InputUi(rootId: Matcher<View>, rootClass: Matcher<View>) {
         )
     )
 
-    fun checkEmpty() {
-        editTextInteraction.check(matches(withText("")))
-    }
-
     fun inputWord(text: String) {
         editTextInteraction.perform(replaceText(text), closeSoftKeyboard())
     }
 
     fun checkQuestionState() {
+        inputLayoutInteraction.check(matches(InputHasErrorMatcher(false)))
+        editTextInteraction.check(matches(withText("")))
+    }
+
+    fun checkInsufficientState() {
         inputLayoutInteraction.check(matches(InputHasErrorMatcher(false)))
     }
 

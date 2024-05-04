@@ -28,6 +28,10 @@ class SubmitUi(rootId: Matcher<View>, rootClass: Matcher<View>) {
         interaction.check(matches(isNotEnabled()))
     }
 
+    fun checkInsufficientState() {
+        interaction.check(matches(isNotEnabled()))
+    }
+
     fun checkMatchState() {
         interaction.check(matches(isEnabled()))
     }

@@ -22,10 +22,6 @@ class GamePage(
     private val skipUi = SkipUi(rootId, rootClass)
     private val scoreUi = ScoreUi(rootId, rootClass)
 
-    fun checkInputEmpty() {
-        inputUi.checkEmpty()
-    }
-
     fun checkQuestionState() {
         counterUi.check(counter)
         wordUi.check(word)
@@ -42,6 +38,11 @@ class GamePage(
     fun checkErrorState() {
         inputUi.checkErrorState()
         submitUi.checkErrorState()
+    }
+
+    fun checkInsufficientState() {
+        inputUi.checkInsufficientState()
+        submitUi.checkInsufficientState()
     }
 
     fun inputWord(text: String) {

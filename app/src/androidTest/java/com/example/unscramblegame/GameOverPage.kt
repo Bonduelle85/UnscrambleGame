@@ -13,7 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.Matchers.allOf
 
-class GameOverUi {
+class GameOverPage(private val score: String) {
 
     private val rootId: Int = R.id.gameOverLayout
 
@@ -36,7 +36,7 @@ class GameOverUi {
         )
     )
 
-    fun check(score: String) {
+    fun check() {
         val text = "You scored: $score"
         titleInteraction.check(matches(isDisplayed()))
         scoreInteraction.check(matches(withText(text)))

@@ -1,5 +1,6 @@
 package com.example.unscramblegame
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.TextView
@@ -12,6 +13,7 @@ import com.example.unscramblegame.databinding.GameOverBinding
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -19,7 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = GameViewModel(Repository.Base(max = 10)) // max = 2 for ScenarioTest
 
-        val gameOverDialog: UpdateScore = GameOverDialog(this, viewModel)
+        val gameOverDialog: UpdateScore = GameOverDialog(this) {
+            val uiState = viewModel.playAgain()
+            uiState.update(binding)
+        }
 
         binding.submitButton.setOnClickListener {
             val uiState = viewModel.submit(guess = binding.inputEditText.text.toString())
@@ -44,8 +49,8 @@ class MainActivity : AppCompatActivity() {
 }
 
 private class GameOverDialog(
-    private val activity: MainActivity,
-    private val viewModel: PlayAgain
+    private val activity: Activity,
+    private val playAgain: () -> Unit
 ) : UpdateScore {
 
     private val builder: AlertDialog.Builder
@@ -57,8 +62,7 @@ private class GameOverDialog(
         scoreTextView = binding.gameOverScoreTextView
         binding.playAgainButton.setOnClickListener {
             dialog.dismiss()
-            val uiState = viewModel.playAgain()
-            uiState.update(activity.binding)
+            playAgain.invoke()
         }
         binding.exitButton.setOnClickListener {
             activity.finish()

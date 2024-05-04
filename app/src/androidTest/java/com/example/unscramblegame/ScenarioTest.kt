@@ -151,10 +151,10 @@ class ScenarioTest {
 
         gamePage.clickSubmit()
 
-        gamePage = GamePage(score = "30")
-        gamePage.checkGameOverState()
+        val gameOverPage = GameOverPage("30")
+        gameOverPage.check()
 
-        gamePage.clickPlayAgain()
+        gameOverPage.clickPlayAgain()
 
         gamePage = GamePage(
             counter = "1/2",
@@ -228,10 +228,10 @@ class ScenarioTest {
 
         gamePage.clickSubmit()
 
-        gamePage = GamePage(score = "30")
-        gamePage.checkGameOverState()
+        val gameOverPage = GameOverPage("30")
+        gameOverPage.check()
 
-        gamePage.clickExit()
+        gameOverPage.clickExit()
         assertTrue(scenarioRule.scenario.state != Lifecycle.State.RESUMED)
     }
 }

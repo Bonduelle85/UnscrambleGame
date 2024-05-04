@@ -17,13 +17,8 @@ interface UiState {
             counterTextView.text = counter
             wordTextView.text = word
             scoreTextView.text = score
-            submitButton.isEnabled = false
             inputEditText.setText("")
-            inputLayout.isErrorEnabled = false
-            inputLayout.error = ""
         }
-
-
     }
 
     data class GameOver(private val score: String) : UiState {
@@ -32,11 +27,9 @@ interface UiState {
             binding.scoreTextView.text = score
             binding.inputEditText.setText("")
         }
-
         override fun update(updateScore: UpdateScore) {
             updateScore.showGameOver(score)
         }
-
     }
 
     object InsufficientInput : UiState {
@@ -46,7 +39,6 @@ interface UiState {
             inputLayout.isErrorEnabled = false
             inputLayout.error = ""
         }
-
     }
 
     object Match : UiState {
@@ -64,6 +56,4 @@ interface UiState {
             inputLayout.error = inputLayout.context.getString(R.string.error)
         }
     }
-
-
 }

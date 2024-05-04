@@ -21,7 +21,6 @@ class GamePage(
     private val submitUi = SubmitUi(rootId, rootClass)
     private val skipUi = SkipUi(rootId, rootClass)
     private val scoreUi = ScoreUi(rootId, rootClass)
-    private val gameOverUi = GameOverUi()
 
     fun checkInputEmpty() {
         inputUi.checkEmpty()
@@ -45,10 +44,6 @@ class GamePage(
         submitUi.checkErrorState()
     }
 
-    fun checkGameOverState() {
-        gameOverUi.check(score = score)
-    }
-
     fun inputWord(text: String) {
         inputUi.inputWord(text = text)
     }
@@ -59,13 +54,5 @@ class GamePage(
 
     fun clickSkip() {
         skipUi.click()
-    }
-
-    fun clickPlayAgain() {
-        gameOverUi.clickPlayAgain()
-    }
-
-    fun clickExit() {
-        gameOverUi.clickExit()
     }
 }

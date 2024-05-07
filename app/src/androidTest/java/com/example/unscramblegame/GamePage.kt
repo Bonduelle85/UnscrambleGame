@@ -12,7 +12,7 @@ class GamePage(
     private val word: String = "",
     private val score: String,
 ) {
-    private val rootId: Matcher<View> = withParent(withId(R.id.rootLayout))
+    private val rootId: Matcher<View> = withParent(withId(R.id.gameLayout))
     private val rootClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
 
     private val counterUi = CounterUi(rootId, rootClass)

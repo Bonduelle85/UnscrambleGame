@@ -16,7 +16,7 @@ class App : Application() {
         super.onCreate()
 
         gameViewModel =
-            GameViewModel(Repository.Base(PermanentStorage.Base(this), DataSource.Base(), max = 10))
+            GameViewModel(Repository.Base(PermanentStorage.Base(this), DataSource.Base(), max = 2))
 
         congratulationViewModel =
             CongratulationViewModel(

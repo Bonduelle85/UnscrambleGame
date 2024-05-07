@@ -19,7 +19,7 @@ interface GameUiState : Serializable {
 
     fun navigate(navigation: () -> Unit) = Unit
 
-    data class GoToCongratulations(private val currentScore: String) : GameUiState {
+    data class GoToCongratulations(private val score: String) : GameUiState {
 
         override fun navigate(navigation: () -> Unit) {
             navigation.invoke()

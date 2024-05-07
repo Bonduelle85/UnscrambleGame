@@ -2,11 +2,11 @@ package com.example.unscramblegame
 
 import android.app.Application
 import android.content.Context
-import com.example.unscramblegame.data.BooleanCache
 import com.example.unscramblegame.data.DataSource
 import com.example.unscramblegame.data.GameOverRepository
 import com.example.unscramblegame.data.GameRepository
-import com.example.unscramblegame.data.IntCache
+import com.example.unscramblegame.data.core.BooleanCache
+import com.example.unscramblegame.data.core.IntCache
 import com.example.unscramblegame.presentation.game.GameViewModel
 import com.example.unscramblegame.presentation.gameover.GameOverViewModel
 
@@ -25,11 +25,11 @@ class App : Application() {
             GameViewModel(
                 GameRepository.Base(
                     IntCache.Base(SCORE, sharedPreferences),
-                    IntCache.Base(UI_INDEX, sharedPreferences),
+                    IntCache.Base(UI_INDEX, sharedPreferences, 1),
                     IntCache.Base(CURRENT_INDEX, sharedPreferences),
                     BooleanCache.Base(FAILED, sharedPreferences),
                     DataSource.Base(),
-                    max = 10
+                    max = 2
                 )
             )
 

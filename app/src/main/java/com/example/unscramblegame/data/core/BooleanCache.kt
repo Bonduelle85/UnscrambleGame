@@ -1,4 +1,4 @@
-package com.example.unscramblegame.data
+package com.example.unscramblegame.data.core
 
 import android.content.SharedPreferences
 

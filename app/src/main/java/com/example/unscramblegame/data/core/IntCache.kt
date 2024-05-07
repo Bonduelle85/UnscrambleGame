@@ -1,4 +1,4 @@
-package com.example.unscramblegame.data
+package com.example.unscramblegame.data.core
 
 import android.content.SharedPreferences
 
@@ -11,6 +11,7 @@ interface IntCache {
     class Base(
         private val key: String,
         private val sharedPreferences: SharedPreferences,
+        private val defValue: Int = 0,
     ) : IntCache {
 
         override fun save(value: Int) {
@@ -18,7 +19,7 @@ interface IntCache {
         }
 
         override fun read(): Int {
-            return sharedPreferences.getInt(key, 0)
+            return sharedPreferences.getInt(key, defValue)
         }
     }
 }

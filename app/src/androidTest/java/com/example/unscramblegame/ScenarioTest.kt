@@ -33,7 +33,7 @@ class ScenarioTest {
      * Input correct word
      * submit button became enabled (state Match)
      * Press Submit
-     * counter 1/10, word changed, input empty, submit disabled, score : 20 (state question)
+     * counter 1/2, word changed, input empty, submit disabled, score : 20 (state question)
      */
     @Test
     fun caseNumber1() {

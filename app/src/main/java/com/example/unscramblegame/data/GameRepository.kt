@@ -1,5 +1,8 @@
 package com.example.unscramblegame.data
 
+import com.example.unscramblegame.data.core.BooleanCache
+import com.example.unscramblegame.data.core.IntCache
+
 interface GameRepository {
 
     fun currentWord(): String
@@ -67,6 +70,7 @@ interface GameRepository {
             currentIndex.save(currentIndex.read() + 1)
             if (currentIndex.read() == list.size)
                 currentIndex.save(0)
+
 
             uiIndex.save(1)
             failed.save(false)

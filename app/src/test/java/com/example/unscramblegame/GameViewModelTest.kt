@@ -185,7 +185,7 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = gameViewModel.submit(guess = "eu")
-        expectedUiState = GameUiState.GoToCongratulations(score = "30")
+        expectedUiState = GameUiState.GameOver
         assertEquals(expectedUiState, actualUiState)
     }
 

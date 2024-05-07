@@ -1,5 +1,7 @@
 package com.example.unscramblegame.data
 
+import com.example.unscramblegame.data.core.IntCache
+
 interface GameOverRepository {
 
     fun currentScore(): String

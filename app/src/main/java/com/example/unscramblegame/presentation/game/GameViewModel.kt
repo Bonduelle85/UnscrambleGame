@@ -1,12 +1,11 @@
 package com.example.unscramblegame.presentation.game
 
-import com.example.unscramblegame.data.Repository
+import com.example.unscramblegame.data.GameRepository
 
-class GameViewModel(private val repository: Repository) : PlayAgain {
+class GameViewModel(private val repository: GameRepository) {
 
-    override fun playAgain(): GameUiState {
+    fun clearBeforeGameOver() {
         repository.reset()
-        return init()
     }
 
     fun submit(guess: String): GameUiState = if (repository.check(guess))
@@ -15,7 +14,7 @@ class GameViewModel(private val repository: Repository) : PlayAgain {
         GameUiState.Error
 
     fun skip(): GameUiState = if (repository.isLast())
-        GameUiState.GoToCongratulations(repository.currentScore())
+        GameUiState.GameOver
     else {
         repository.next()
         init()

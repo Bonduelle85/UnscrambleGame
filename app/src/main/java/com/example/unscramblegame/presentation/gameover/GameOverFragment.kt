@@ -1,4 +1,4 @@
-package com.example.unscramblegame.presentation.congratulation
+package com.example.unscramblegame.presentation.gameover
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.example.unscramblegame.presentation.game.GameFragment
 import com.example.unscramblegame.presentation.main.Navigation
 
 
-class CongratulationFragment : Fragment() {
+class GameOverFragment : Fragment() {
 
     private var _binding: FragmentCongratulationBinding? = null
     private val binding get() = _binding!!
@@ -29,7 +29,7 @@ class CongratulationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = (requireActivity().application as App).congratulationViewModel
+        val viewModel = (requireActivity().application as App).gameOverViewModel
 
         if (savedInstanceState == null) {
             val score = viewModel.getScore()

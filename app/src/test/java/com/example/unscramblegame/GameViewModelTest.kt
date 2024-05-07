@@ -1,9 +1,9 @@
 package com.example.unscramblegame
 
-import com.example.unscramblegame.data.Repository
-import com.example.unscramblegame.presentation.congratulation.CongratulationViewModel
+import com.example.unscramblegame.data.GameRepository
 import com.example.unscramblegame.presentation.game.GameUiState
 import com.example.unscramblegame.presentation.game.GameViewModel
+import com.example.unscramblegame.presentation.gameover.GameOverViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -11,11 +11,11 @@ import org.junit.Test
 class GameViewModelTest {
 
     private lateinit var gameViewModel: GameViewModel
-    private lateinit var congratulationViewModel: CongratulationViewModel
+    private lateinit var gameOverViewModel: GameOverViewModel
 
     @Before
     fun setup() {
-        gameViewModel = GameViewModel(repository = FakeRepository())
+        gameViewModel = GameViewModel(repository = FakeGameRepository())
     }
 
     /**
@@ -187,14 +187,6 @@ class GameViewModelTest {
         actualUiState = gameViewModel.submit(guess = "eu")
         expectedUiState = GameUiState.GoToCongratulations(score = "30")
         assertEquals(expectedUiState, actualUiState)
-
-        actualUiState = gameViewModel.playAgain()
-        expectedUiState = GameUiState.Question(
-            counter = "1/2",
-            word = "EU".reversed(),
-            score = "0"
-        )
-        assertEquals(expectedUiState, actualUiState)
     }
 
     /**
@@ -231,7 +223,7 @@ class GameViewModelTest {
     }
 }
 
-private class FakeRepository : Repository {
+private class FakeGameRepository : GameRepository {
 
     private val list = listOf("an", "EU", "XY")
 

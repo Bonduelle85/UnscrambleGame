@@ -15,23 +15,14 @@ interface GameUiState : Serializable {
         scoreView: UpdateText,
         submitView: UpdateSubmitButton,
         inputView: InputAction
-    )
+    ) = Unit
 
-    fun navigate(navigation: () -> Unit) = Unit
+    fun navigate(showGameOver: () -> Unit) = Unit
 
-    data class GoToCongratulations(private val score: String) : GameUiState {
-
-        override fun navigate(navigation: () -> Unit) {
-            navigation.invoke()
+    object GameOver : GameUiState {
+        override fun navigate(showGameOver: () -> Unit) {
+            showGameOver.invoke()
         }
-
-        override fun update(
-            counterView: UpdateText,
-            wordView: UpdateText,
-            scoreView: UpdateText,
-            submitView: UpdateSubmitButton,
-            inputView: InputAction
-        ) = Unit
     }
 
     data class Question(

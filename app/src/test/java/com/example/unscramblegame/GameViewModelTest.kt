@@ -1,8 +1,8 @@
 package com.example.unscramblegame
 
 import com.example.unscramblegame.data.Repository
-import com.example.unscramblegame.presentation.GameViewModel
-import com.example.unscramblegame.presentation.UiState
+import com.example.unscramblegame.presentation.game.GameUiState
+import com.example.unscramblegame.presentation.game.GameViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -25,8 +25,8 @@ class GameViewModelTest {
      */
     @Test
     fun caseNumber1() {
-        var actualUiState: UiState = viewModel.init()
-        var expectedUiState: UiState = UiState.Question(
+        var actualUiState: GameUiState = viewModel.init()
+        var expectedUiState: GameUiState = GameUiState.Question(
             counter = "1/2",
             word = "an".reversed(),
             score = "0"
@@ -34,15 +34,15 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "a")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "an")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.submit(guess = "an")
-        expectedUiState = UiState.Question(
+        expectedUiState = GameUiState.Question(
             counter = "2/2",
             word = "EU".reversed(),
             score = "20"
@@ -65,8 +65,8 @@ class GameViewModelTest {
      */
     @Test
     fun caseNumber2() {
-        var actualUiState: UiState = viewModel.init()
-        var expectedUiState: UiState = UiState.Question(
+        var actualUiState: GameUiState = viewModel.init()
+        var expectedUiState: GameUiState = GameUiState.Question(
             counter = "1/2",
             word = "an".reversed(),
             score = "0"
@@ -74,27 +74,27 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "a")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "aj")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.submit(guess = "aj")
-        expectedUiState = UiState.Error
+        expectedUiState = GameUiState.Error
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "a")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "an")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.submit(guess = "an")
-        expectedUiState = UiState.Question(
+        expectedUiState = GameUiState.Question(
             counter = "2/2",
             word = "EU".reversed(),
             score = "10"
@@ -110,8 +110,8 @@ class GameViewModelTest {
      */
     @Test
     fun caseNumber3() {
-        var actualUiState: UiState = viewModel.init()
-        var expectedUiState: UiState = UiState.Question(
+        var actualUiState: GameUiState = viewModel.init()
+        var expectedUiState: GameUiState = GameUiState.Question(
             counter = "1/2",
             word = "an".reversed(),
             score = "0"
@@ -119,7 +119,7 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.skip()
-        expectedUiState = UiState.Question(
+        expectedUiState = GameUiState.Question(
             counter = "2/2",
             word = "EU".reversed(),
             score = "0"
@@ -138,8 +138,8 @@ class GameViewModelTest {
      */
     @Test
     fun caseNumber4() {
-        var actualUiState: UiState = viewModel.init()
-        var expectedUiState: UiState = UiState.Question(
+        var actualUiState: GameUiState = viewModel.init()
+        var expectedUiState: GameUiState = GameUiState.Question(
             counter = "1/2",
             word = "an".reversed(),
             score = "0"
@@ -147,15 +147,15 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "a")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "an")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.submit(guess = "an")
-        expectedUiState = UiState.Question(
+        expectedUiState = GameUiState.Question(
             counter = "2/2",
             word = "EU".reversed(),
             score = "20"
@@ -163,31 +163,31 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "e")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "ei")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.submit(guess = "ei")
-        expectedUiState = UiState.Error
+        expectedUiState = GameUiState.Error
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "e")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "eu")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.submit(guess = "eu")
-        expectedUiState = UiState.GameOver(score = "30")
+        expectedUiState = GameUiState.GameOver(score = "30")
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.playAgain()
-        expectedUiState = UiState.Question(
+        expectedUiState = GameUiState.Question(
             counter = "1/2",
             word = "EU".reversed(),
             score = "0"
@@ -207,8 +207,8 @@ class GameViewModelTest {
      */
     @Test
     fun caseNumber5() {
-        var actualUiState: UiState = viewModel.init()
-        var expectedUiState: UiState = UiState.Question(
+        var actualUiState: GameUiState = viewModel.init()
+        var expectedUiState: GameUiState = GameUiState.Question(
             counter = "1/2",
             word = "an".reversed(),
             score = "0"
@@ -216,15 +216,15 @@ class GameViewModelTest {
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "n")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "na")
-        expectedUiState = UiState.Match
+        expectedUiState = GameUiState.Match
         assertEquals(expectedUiState, actualUiState)
 
         actualUiState = viewModel.checkUserInput(guess = "nax")
-        expectedUiState = UiState.InsufficientInput
+        expectedUiState = GameUiState.InsufficientInput
         assertEquals(expectedUiState, actualUiState)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.unscramblegame.presentation
+package com.example.unscramblegame.presentation.game
 
 import com.example.unscramblegame.R
 import com.example.unscramblegame.views.input.InputAction
@@ -7,7 +7,7 @@ import com.example.unscramblegame.views.submit.UpdateSubmitButton
 import com.example.unscramblegame.views.word.UpdateText
 import java.io.Serializable
 
-interface UiState : Serializable {
+interface GameUiState : Serializable {
 
     fun update(
         counterView: UpdateText,
@@ -17,13 +17,28 @@ interface UiState : Serializable {
         inputView: InputAction
     )
 
-    fun update(updateScore: UpdateScore) = Unit
+    fun navigate(navigation: () -> Unit) = Unit
+
+    data class GoToCongratulations(private val currentScore: String) : GameUiState {
+
+        override fun navigate(navigation: () -> Unit) {
+            navigation.invoke()
+        }
+
+        override fun update(
+            counterView: UpdateText,
+            wordView: UpdateText,
+            scoreView: UpdateText,
+            submitView: UpdateSubmitButton,
+            inputView: InputAction
+        ) = Unit
+    }
 
     data class Question(
         private val counter: String,
         private val word: String,
         private val score: String
-    ) : UiState {
+    ) : GameUiState {
 
         override fun update(
             counterView: UpdateText,
@@ -40,25 +55,7 @@ interface UiState : Serializable {
         }
     }
 
-    data class GameOver(private val score: String) : UiState {
-
-        override fun update(
-            counterView: UpdateText,
-            wordView: UpdateText,
-            scoreView: UpdateText,
-            submitView: UpdateSubmitButton,
-            inputView: InputAction
-        ) {
-            scoreView.update(score)
-            inputView.updateState(InputUiState.ClearError)
-        }
-
-        override fun update(updateScore: UpdateScore) {
-            updateScore.showGameOver(score)
-        }
-    }
-
-    object InsufficientInput : UiState {
+    object InsufficientInput : GameUiState {
 
         override fun update(
             counterView: UpdateText,
@@ -73,7 +70,7 @@ interface UiState : Serializable {
 
     }
 
-    object Match : UiState {
+    object Match : GameUiState {
 
         override fun update(
             counterView: UpdateText,
@@ -87,7 +84,7 @@ interface UiState : Serializable {
         }
     }
 
-    object Error : UiState {
+    object Error : GameUiState {
 
         override fun update(
             counterView: UpdateText,

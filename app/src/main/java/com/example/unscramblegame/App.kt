@@ -9,6 +9,7 @@ import com.example.unscramblegame.data.core.BooleanCache
 import com.example.unscramblegame.data.core.IntCache
 import com.example.unscramblegame.presentation.game.GameViewModel
 import com.example.unscramblegame.presentation.gameover.GameOverViewModel
+import com.example.unscramblegame.presentation.gameover.Statistics
 
 class App : Application() {
 
@@ -47,6 +48,7 @@ class App : Application() {
 
         gameOverViewModel =
             GameOverViewModel(
+                Statistics.Base(this),
                 GameOverRepository.Base(
                     score,
                     corrects,

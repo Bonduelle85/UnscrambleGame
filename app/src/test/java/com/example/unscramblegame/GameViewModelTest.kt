@@ -3,7 +3,6 @@ package com.example.unscramblegame
 import com.example.unscramblegame.data.GameRepository
 import com.example.unscramblegame.presentation.game.GameUiState
 import com.example.unscramblegame.presentation.game.GameViewModel
-import com.example.unscramblegame.presentation.gameover.GameOverViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -11,7 +10,6 @@ import org.junit.Test
 class GameViewModelTest {
 
     private lateinit var gameViewModel: GameViewModel
-    private lateinit var gameOverViewModel: GameOverViewModel
 
     @Before
     fun setup() {
@@ -232,6 +230,7 @@ private class FakeGameRepository : GameRepository {
     private var score: Int = 0
     private val max: Int = 2
     private var failed: Boolean = false
+    private var skips: Int = 0
 
     override fun currentWord(): String {
         return list[currentIndex]
@@ -273,5 +272,9 @@ private class FakeGameRepository : GameRepository {
         score = 0
         uiIndex = 1
         failed = false
+    }
+
+    override fun incrementSkips() {
+        skips++
     }
 }

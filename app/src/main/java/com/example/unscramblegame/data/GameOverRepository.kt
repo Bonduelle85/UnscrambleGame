@@ -5,13 +5,14 @@ import com.example.unscramblegame.data.core.IntCache
 interface GameOverRepository {
 
     fun getCurrentScore(): String
-    fun clearCurrentScore()
+
     fun getCorrects(): String
-    fun clearCorrects()
+
     fun getIncorrecs(): String
-    fun clearIncorrects()
+
     fun getSkips(): String
-    fun clearSkips()
+
+    fun clear()
 
     class Base(
         private val score: IntCache,
@@ -24,32 +25,23 @@ interface GameOverRepository {
             return score.read().toString()
         }
 
-        override fun clearCurrentScore() {
-            score.save(0)
-        }
-
         override fun getCorrects(): String {
             return corrects.read().toString()
-        }
-
-        override fun clearCorrects() {
-            corrects.save(0)
         }
 
         override fun getIncorrecs(): String {
             return incorrects.read().toString()
         }
 
-        override fun clearIncorrects() {
-            incorrects.save(0)
-        }
-
         override fun getSkips(): String {
             return skips.read().toString()
         }
 
-        override fun clearSkips() {
+        override fun clear() {
             skips.save(0)
+            incorrects.save(0)
+            corrects.save(0)
+            score.save(0)
         }
     }
 }

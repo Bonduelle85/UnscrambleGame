@@ -21,13 +21,25 @@ class App : Application() {
         val sharedPreferences =
             getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
 
+        val score = IntCache.Base(SCORE, sharedPreferences)
+        val uiIndex = IntCache.Base(UI_INDEX, sharedPreferences, 1)
+        val currentIndex = IntCache.Base(CURRENT_INDEX, sharedPreferences)
+        val failed = BooleanCache.Base(FAILED, sharedPreferences)
+        val corrects = IntCache.Base(CORRECTS, sharedPreferences)
+        val incorrects = IntCache.Base(INCORRECTS, sharedPreferences)
+        val skips = IntCache.Base(SKIPS, sharedPreferences)
+
+
         gameViewModel =
             GameViewModel(
                 GameRepository.Base(
-                    IntCache.Base(SCORE, sharedPreferences),
-                    IntCache.Base(UI_INDEX, sharedPreferences, 1),
-                    IntCache.Base(CURRENT_INDEX, sharedPreferences),
-                    BooleanCache.Base(FAILED, sharedPreferences),
+                    score,
+                    uiIndex,
+                    currentIndex,
+                    failed,
+                    corrects,
+                    incorrects,
+                    skips,
                     DataSource.Base(),
                     max = 2
                 )
@@ -36,7 +48,10 @@ class App : Application() {
         gameOverViewModel =
             GameOverViewModel(
                 GameOverRepository.Base(
-                    IntCache.Base(SCORE, sharedPreferences)
+                    score,
+                    corrects,
+                    incorrects,
+                    skips,
                 )
             )
     }
@@ -46,5 +61,8 @@ class App : Application() {
         const val UI_INDEX = "UI_INDEX"
         const val CURRENT_INDEX = "CURRENT_INDEX"
         const val FAILED = "FAILED"
+        const val CORRECTS = "CORRECTS"
+        const val INCORRECTS = "INCORRECTS"
+        const val SKIPS = "SKIPS"
     }
 }

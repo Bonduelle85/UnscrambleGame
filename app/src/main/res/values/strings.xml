@@ -4,7 +4,7 @@
     <string name="skip">Skip</string>
     <string name="hint">Enter word</string>
     <string name="congratulations">Congratulations!</string>
-    <string name="scored">You scored: %s</string>
+    <string name="scored">Score: %s\nCorrect: %s\nIncorrect: %s\nSkips: %s</string>
     <string name="play_again">Play again</string>
     <string name="exit">Exit</string>
     <string name="error">Not correct</string>

@@ -17,6 +17,7 @@ class ScenarioTest {
     val scenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     private lateinit var gamePage: GamePage
+    private lateinit var gameOverPage: GameOverPage
 
     @Before
     fun setup() {
@@ -176,7 +177,7 @@ class ScenarioTest {
 
         gamePage.clickSubmit()
 
-        val gameOverPage = GameOverPage("30")
+        gameOverPage = GameOverPage("30", "1", "1", "0")
         gameOverPage.check()
         scenarioRule.scenario.recreate()
         gameOverPage.check()
@@ -274,7 +275,7 @@ class ScenarioTest {
 
         gamePage.clickSubmit()
 
-        val gameOverPage = GameOverPage("30")
+        gameOverPage = GameOverPage("30", "1", "1", "0")
         gameOverPage.check()
         scenarioRule.scenario.recreate()
         gameOverPage.check()
@@ -282,5 +283,180 @@ class ScenarioTest {
 
         gameOverPage.clickExit()
         assertTrue(scenarioRule.scenario.state != Lifecycle.State.RESUMED)
+    }
+
+    /**
+     * Number 7: GameOver screen : score 20, correct 1, incorrect 1, skip 1
+     *
+     * Input correct word
+     * submit button became enabled (state Match)
+     * Press Submit
+     * counter 1/2, word changed, input empty, submit disabled, score : 20 (state question)
+     *
+     * Input incorrect word
+     * submit button became enabled (State match)
+     * Press Submit
+     * Input has error , submit disabled (state Error)
+     *
+     * Press Skip
+     * result: GameOver screen : score 20, correct 1, incorrect 1, skip 1
+     * Press exit
+     * not visible to user anymore
+     */
+    @Test
+    fun caseNumber7() {
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
+
+        gamePage.inputWord(text = "animal")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
+
+        gamePage.clickSubmit()
+
+        gamePage = GamePage(
+            counter = "2/2",
+            word = "auto".reversed(),
+            score = "20"
+        )
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
+
+        gamePage.inputWord(text = "auot")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
+        gamePage.clickSubmit()
+        gamePage.checkErrorState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkErrorState()
+
+        gamePage.clickSkip()
+        gameOverPage = GameOverPage("20", "1", "1", "1")
+        gameOverPage.check()
+        scenarioRule.scenario.recreate()
+        gameOverPage.check()
+    }
+
+    /**
+     * Number 8: GameOver screen : score 20, correct 2, incorrect 2, skip 0
+     *
+     * Input incorrect word
+     * submit button became enabled (state Match)
+     * Press Submit
+     * Input has error , submit disabled (state Error)
+     *
+     * Input correct word
+     * submit button became enabled (state Match)
+     * Press Submit
+     * counter 1/2, word changed, input empty, submit disabled, score : 10 (state question)
+     *
+     * Input incorrect word
+     * submit button became enabled (State match)
+     * Press Submit
+     * Input has error , submit disabled (state Error)
+     *
+     * Input correct word
+     * submit button became enabled (state Match)
+     * Press Submit
+     *
+     * result: GameOver screen : score 20, correct 2, incorrect 2, skip 0
+     */
+    @Test
+    fun caseNumber8() {
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
+
+        gamePage.inputWord(text = "animla")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
+        gamePage.clickSubmit()
+
+        gamePage.checkErrorState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkErrorState()
+
+        gamePage.inputWord(text = "animal")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
+        gamePage.clickSubmit()
+
+        gamePage = GamePage(
+            counter = "2/2",
+            word = "auto".reversed(),
+            score = "10"
+        )
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
+
+        gamePage.inputWord(text = "auot")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
+        gamePage.clickSubmit()
+
+        gamePage.checkErrorState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkErrorState()
+
+        gamePage.inputWord(text = "auto")
+        gamePage.checkMatchState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkMatchState()
+
+        gamePage.clickSubmit()
+
+        gameOverPage = GameOverPage("20", "2", "2", "0")
+        gameOverPage.check()
+        scenarioRule.scenario.recreate()
+        gameOverPage.check()
+    }
+
+    /**
+     * Number 9: Skip 2 times - GameOver screen : score 0, correct 0, incorrect 0, skip 2
+     *
+     * Press Skip
+     * counter 1/2, word changed, input empty, submit disabled, score : 0 (state question)
+     *
+     * Press Skip
+     *
+     * result: GameOver screen : score 0, correct 0, incorrect 0, skip 2
+     */
+    @Test
+    fun caseNumber9() {
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
+
+        gamePage.clickSkip()
+
+        gamePage = GamePage(
+            counter = "2/2",
+            word = "auto".reversed(),
+            score = "0"
+        )
+
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
+
+        gamePage.clickSkip()
+
+        gameOverPage = GameOverPage("0", "0", "0", "2")
+        gameOverPage.check()
+        scenarioRule.scenario.recreate()
+        gameOverPage.check()
     }
 }

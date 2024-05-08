@@ -9,15 +9,18 @@ class GameViewModel(private val repository: GameRepository) {
     }
 
     fun submit(guess: String): GameUiState = if (repository.check(guess))
-        skip()
+        skip(false)
     else
         GameUiState.Error
 
-    fun skip(): GameUiState = if (repository.isLast())
-        GameUiState.GameOver
-    else {
-        repository.next()
-        init()
+    fun skip(isSkipped: Boolean = true): GameUiState {
+        if (isSkipped) repository.incrementSkips()
+        return if (repository.isLast()) {
+            GameUiState.GameOver
+        } else {
+            repository.next()
+            init()
+        }
     }
 
     fun checkUserInput(guess: String): GameUiState = if (repository.sameLength(guess))

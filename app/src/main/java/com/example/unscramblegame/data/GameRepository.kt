@@ -13,12 +13,16 @@ interface GameRepository {
     fun isLast(): Boolean
     fun next()
     fun reset()
+    fun incrementSkips()
 
     class Base(
         private val score: IntCache,
         private val uiIndex: IntCache,
         private val currentIndex: IntCache,
         private val failed: BooleanCache,
+        private val corrects: IntCache,
+        private val incorrects: IntCache,
+        private val skips: IntCache,
         dataSource: DataSource,
         private val max: Int
     ) : GameRepository {
@@ -46,9 +50,11 @@ interface GameRepository {
                 val oldScore = score.read()
                 val newScore = oldScore + if (failed.read()) 10 else 20
                 score.save(newScore)
+                corrects.save(corrects.read() + 1)
                 true
             } else {
                 failed.save(true)
+                incorrects.save(incorrects.read() + 1)
                 false
             }
         }
@@ -71,9 +77,12 @@ interface GameRepository {
             if (currentIndex.read() == list.size)
                 currentIndex.save(0)
 
-
             uiIndex.save(1)
             failed.save(false)
+        }
+
+        override fun incrementSkips() {
+            skips.save(skips.read() + 1)
         }
     }
 }

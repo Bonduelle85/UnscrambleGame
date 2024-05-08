@@ -11,7 +11,7 @@ interface IntCache {
     class Base(
         private val key: String,
         private val sharedPreferences: SharedPreferences,
-        private val defValue: Int = 0,
+        private val defValue: Int = DEFAULT_VALUE,
     ) : IntCache {
 
         override fun save(value: Int) {
@@ -21,5 +21,9 @@ interface IntCache {
         override fun read(): Int {
             return sharedPreferences.getInt(key, defValue)
         }
+    }
+
+    companion object {
+        const val DEFAULT_VALUE = 0
     }
 }

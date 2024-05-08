@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.unscramblegame.App
 import com.example.unscramblegame.R
-import com.example.unscramblegame.databinding.FragmentCongratulationBinding
+import com.example.unscramblegame.databinding.FragmentGameoverBinding
 import com.example.unscramblegame.presentation.game.GameFragment
 import com.example.unscramblegame.presentation.main.Navigation
 
 
 class GameOverFragment : Fragment() {
 
-    private var _binding: FragmentCongratulationBinding? = null
+    private var _binding: FragmentGameoverBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class GameOverFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCongratulationBinding.inflate(inflater, container, false)
+        _binding = FragmentGameoverBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,8 +33,11 @@ class GameOverFragment : Fragment() {
 
         if (savedInstanceState == null) {
             val score = viewModel.getScore()
+            val corrects = viewModel.getCorrects()
+            val incorrects = viewModel.getIncorrects()
+            val skips = viewModel.getSkips()
             binding.gameOverScoreTextView.text =
-                getString(R.string.scored, score)
+                getString(R.string.scored, score, corrects, incorrects, skips)
         }
 
         binding.playAgainButton.setOnClickListener {

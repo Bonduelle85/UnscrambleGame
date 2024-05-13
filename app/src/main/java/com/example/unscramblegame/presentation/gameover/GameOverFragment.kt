@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.unscramblegame.App
 import com.example.unscramblegame.databinding.FragmentGameoverBinding
-import com.example.unscramblegame.presentation.game.GameFragment
-import com.example.unscramblegame.presentation.main.Navigation
 
 
 class GameOverFragment : Fragment() {
@@ -35,7 +33,7 @@ class GameOverFragment : Fragment() {
         }
 
         binding.playAgainButton.setOnClickListener {
-            (requireActivity() as Navigation).navigate(GameFragment())
+            (requireActivity() as GameOverNavigation).navigateFromGameOverScreen()
         }
 
         binding.exitButton.setOnClickListener {
@@ -47,4 +45,8 @@ class GameOverFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+}
+
+interface GameOverNavigation {
+    fun navigateFromGameOverScreen()
 }

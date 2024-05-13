@@ -3,10 +3,13 @@ package com.example.unscramblegame.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.example.unscramblegame.R
 import com.example.unscramblegame.databinding.ActivityMainBinding
-import com.example.unscramblegame.presentation.game.GameFragment
+import com.example.unscramblegame.presentation.Screen
+import com.example.unscramblegame.presentation.game.GameNavigation
+import com.example.unscramblegame.presentation.game.GameScreen
+import com.example.unscramblegame.presentation.gameover.GameOverNavigation
+import com.example.unscramblegame.presentation.gameover.GameOverScreen
 
 
 class MainActivity : AppCompatActivity(), Navigation {
@@ -18,17 +21,23 @@ class MainActivity : AppCompatActivity(), Navigation {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null)
-            navigate(GameFragment())
+            navigate(GameScreen)
     }
 
-    override fun navigate(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
+    override fun navigate(screen: Screen) {
+        screen.show(R.id.container, supportFragmentManager)
     }
 }
 
 
-interface Navigation {
-    fun navigate(fragment: Fragment)
+interface Navigation : GameNavigation, GameOverNavigation {
+    fun navigate(screen: Screen)
+
+    override fun navigateFromGameScreen() {
+        navigate(GameOverScreen)
+    }
+
+    override fun navigateFromGameOverScreen() {
+        navigate(GameScreen)
+    }
 }

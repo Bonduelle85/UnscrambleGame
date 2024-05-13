@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.unscramblegame.App
 import com.example.unscramblegame.databinding.FragmentGameBinding
-import com.example.unscramblegame.presentation.gameover.GameOverFragment
-import com.example.unscramblegame.presentation.main.Navigation
 
 
 class GameFragment : Fragment() {
@@ -47,7 +45,7 @@ class GameFragment : Fragment() {
             uiState = viewModel.submit(guess = binding.customInput.getText())
             showUi.invoke()
             uiState.navigate {
-                (requireActivity() as Navigation).navigate(GameOverFragment())
+                (requireActivity() as GameNavigation).navigateFromGameScreen()
                 viewModel.clearBeforeGameOver()
             }
         }
@@ -56,7 +54,7 @@ class GameFragment : Fragment() {
             uiState = viewModel.skip()
             showUi.invoke()
             uiState.navigate {
-                (requireActivity() as Navigation).navigate(GameOverFragment())
+                (requireActivity() as GameNavigation).navigateFromGameScreen()
                 viewModel.clearBeforeGameOver()
             }
         }
@@ -79,4 +77,8 @@ class GameFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+}
+
+interface GameNavigation {
+    fun navigateFromGameScreen()
 }

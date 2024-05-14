@@ -28,9 +28,12 @@ class GameViewModel(private val repository: GameRepository) {
     else
         GameUiState.InsufficientInput
 
-    fun init(): GameUiState = GameUiState.Question(
-        counter = repository.currentCounter(),
-        word = repository.currentWord().reversed(),
-        score = repository.currentScore()
-    )
+    fun init(): GameUiState {
+        repository.saveLastScreenIsGame()
+        return GameUiState.Question(
+            counter = repository.currentCounter(),
+            word = repository.currentWord().reversed(),
+            score = repository.currentScore()
+        )
+    }
 }

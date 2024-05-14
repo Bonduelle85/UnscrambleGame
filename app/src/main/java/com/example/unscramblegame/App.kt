@@ -5,14 +5,19 @@ import android.content.Context
 import com.example.unscramblegame.data.DataSource
 import com.example.unscramblegame.data.GameOverRepository
 import com.example.unscramblegame.data.GameRepository
+import com.example.unscramblegame.data.MainRepository
 import com.example.unscramblegame.data.core.BooleanCache
 import com.example.unscramblegame.data.core.IntCache
+import com.example.unscramblegame.data.core.StringCache
+import com.example.unscramblegame.presentation.game.GameScreen
 import com.example.unscramblegame.presentation.game.GameViewModel
 import com.example.unscramblegame.presentation.gameover.GameOverViewModel
 import com.example.unscramblegame.presentation.gameover.Statistics
+import com.example.unscramblegame.presentation.main.MainViewModel
 
 class App : Application() {
 
+    lateinit var mainViewModel: MainViewModel
     lateinit var gameViewModel: GameViewModel
     lateinit var gameOverViewModel: GameOverViewModel
 
@@ -29,7 +34,12 @@ class App : Application() {
         val corrects = IntCache.Base(CORRECTS, sharedPreferences)
         val incorrects = IntCache.Base(INCORRECTS, sharedPreferences)
         val skips = IntCache.Base(SKIPS, sharedPreferences)
+        val lastScreen =
+            StringCache.Base(LAST_SCREEN, sharedPreferences, GameScreen::class.java.canonicalName)
 
+        mainViewModel = MainViewModel(
+            MainRepository.Base(lastScreen)
+        )
 
         gameViewModel =
             GameViewModel(
@@ -42,7 +52,8 @@ class App : Application() {
                     incorrects,
                     skips,
                     DataSource.Base(),
-                    max = 2
+                    max = 2,
+                    lastScreen
                 )
             )
 
@@ -54,6 +65,7 @@ class App : Application() {
                     corrects,
                     incorrects,
                     skips,
+                    lastScreen,
                 )
             )
     }
@@ -66,5 +78,6 @@ class App : Application() {
         const val CORRECTS = "CORRECTS"
         const val INCORRECTS = "INCORRECTS"
         const val SKIPS = "SKIPS"
+        const val LAST_SCREEN = "LAST_SCREEN"
     }
 }

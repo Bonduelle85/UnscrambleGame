@@ -45,8 +45,8 @@ class GameFragment : Fragment() {
             uiState = viewModel.submit(guess = binding.customInput.getText())
             showUi.invoke()
             uiState.navigate {
-                (requireActivity() as GameNavigation).navigateFromGameScreen()
                 viewModel.clearBeforeGameOver()
+                (requireActivity() as GameNavigation).navigateFromGameScreen()
             }
         }
 
@@ -54,8 +54,8 @@ class GameFragment : Fragment() {
             uiState = viewModel.skip()
             showUi.invoke()
             uiState.navigate {
-                (requireActivity() as GameNavigation).navigateFromGameScreen()
                 viewModel.clearBeforeGameOver()
+                (requireActivity() as GameNavigation).navigateFromGameScreen()
             }
         }
 

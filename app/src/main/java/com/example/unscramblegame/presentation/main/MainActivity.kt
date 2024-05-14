@@ -3,6 +3,7 @@ package com.example.unscramblegame.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unscramblegame.App
 import com.example.unscramblegame.R
 import com.example.unscramblegame.databinding.ActivityMainBinding
 import com.example.unscramblegame.presentation.Screen
@@ -20,8 +21,11 @@ class MainActivity : AppCompatActivity(), Navigation {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (savedInstanceState == null)
-            navigate(GameScreen)
+
+        val viewModel = (application as App).mainViewModel
+
+        val lastScreen = viewModel.init(savedInstanceState == null)
+        navigate(lastScreen)
     }
 
     override fun navigate(screen: Screen) {

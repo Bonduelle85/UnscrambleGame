@@ -1,6 +1,8 @@
 package com.example.unscramblegame.data
 
 import com.example.unscramblegame.data.core.IntCache
+import com.example.unscramblegame.data.core.StringCache
+import com.example.unscramblegame.presentation.gameover.GameOverScreen
 
 interface GameOverRepository {
 
@@ -14,11 +16,14 @@ interface GameOverRepository {
 
     fun clear()
 
+    fun saveLastScreenIsGameOver()
+
     class Base(
         private val score: IntCache,
         private val corrects: IntCache,
         private val incorrects: IntCache,
         private val skips: IntCache,
+        private val lastScreen: StringCache,
     ) : GameOverRepository {
 
         override fun getCurrentScore(): String {
@@ -42,6 +47,10 @@ interface GameOverRepository {
             incorrects.save(0)
             corrects.save(0)
             score.save(0)
+        }
+
+        override fun saveLastScreenIsGameOver() {
+            lastScreen.save(GameOverScreen::class.java.canonicalName)
         }
     }
 }

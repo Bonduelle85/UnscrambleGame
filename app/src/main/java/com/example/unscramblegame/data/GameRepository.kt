@@ -2,6 +2,8 @@ package com.example.unscramblegame.data
 
 import com.example.unscramblegame.data.core.BooleanCache
 import com.example.unscramblegame.data.core.IntCache
+import com.example.unscramblegame.data.core.StringCache
+import com.example.unscramblegame.presentation.game.GameScreen
 
 interface GameRepository {
 
@@ -14,6 +16,7 @@ interface GameRepository {
     fun next()
     fun reset()
     fun incrementSkips()
+    fun saveLastScreenIsGame()
 
     class Base(
         private val score: IntCache,
@@ -24,7 +27,8 @@ interface GameRepository {
         private val incorrects: IntCache,
         private val skips: IntCache,
         dataSource: DataSource,
-        private val max: Int
+        private val max: Int,
+        private val lastScreen: StringCache
     ) : GameRepository {
 
         private val list = dataSource.data()
@@ -83,6 +87,10 @@ interface GameRepository {
 
         override fun incrementSkips() {
             skips.save(skips.read() + 1)
+        }
+
+        override fun saveLastScreenIsGame() {
+            lastScreen.save(GameScreen::class.java.canonicalName)
         }
     }
 }

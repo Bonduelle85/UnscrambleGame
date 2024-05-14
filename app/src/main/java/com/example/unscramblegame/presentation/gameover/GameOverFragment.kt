@@ -33,6 +33,7 @@ class GameOverFragment : Fragment() {
         }
 
         binding.playAgainButton.setOnClickListener {
+            viewModel.clear()
             (requireActivity() as GameOverNavigation).navigateFromGameOverScreen()
         }
 

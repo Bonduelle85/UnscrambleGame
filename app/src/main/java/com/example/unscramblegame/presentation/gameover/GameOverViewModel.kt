@@ -10,14 +10,17 @@ class GameOverViewModel(
 ) {
 
     fun stats(): String {
-        val makeStatistics = statistics.makeStatistics(
+        repository.saveLastScreenIsGameOver()
+        return statistics.makeStatistics(
             repository.getCurrentScore(),
             repository.getCorrects(),
             repository.getIncorrecs(),
             repository.getSkips()
         )
+    }
+
+    fun clear() {
         repository.clear()
-        return makeStatistics
     }
 }
 

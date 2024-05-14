@@ -44,6 +44,7 @@ class GameFragment : Fragment() {
 
         val clearAndNavigate: () -> Unit = {
             viewModel.clearBeforeGameOver()
+            manageViewModels.clear(GameViewModel::class.java)
             (requireActivity() as GameNavigation).navigateFromGameScreen()
         }
 

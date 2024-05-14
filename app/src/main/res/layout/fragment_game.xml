@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <com.example.unscramblegame.views.word.CustomTextView
+    <com.example.unscramblegame.core.views.word.CustomTextView
         android:id="@+id/counterTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="1/2" />
 
-    <com.example.unscramblegame.views.word.CustomTextView
+    <com.example.unscramblegame.core.views.word.CustomTextView
         android:id="@+id/wordTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,12 +27,12 @@
         tools:text="animal" />
 
 
-    <com.example.unscramblegame.views.input.CustomInput
+    <com.example.unscramblegame.core.views.input.CustomInput
         android:id="@+id/customInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.example.unscramblegame.views.submit.SubmitButton
+    <com.example.unscramblegame.core.views.submit.SubmitButton
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="@string/skip" />
 
-    <com.example.unscramblegame.views.word.CustomTextView
+    <com.example.unscramblegame.core.views.word.CustomTextView
         android:id="@+id/scoreTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,7 +3,7 @@ package com.example.unscramblegame
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.unscramblegame.presentation.main.MainActivity
+import com.example.unscramblegame.main.presentation.MainActivity
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule

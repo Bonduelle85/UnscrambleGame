@@ -41,22 +41,21 @@ class GameFragment : Fragment() {
 
         viewModel = (requireActivity().application as App).gameViewModel
 
+        val clearAndNavigate: () -> Unit = {
+            viewModel.clearBeforeGameOver()
+            (requireActivity() as GameNavigation).navigateFromGameScreen()
+        }
+
         binding.submitButton.setOnClickListener {
             uiState = viewModel.submit(guess = binding.customInput.getText())
             showUi.invoke()
-            uiState.navigate {
-                viewModel.clearBeforeGameOver()
-                (requireActivity() as GameNavigation).navigateFromGameScreen()
-            }
+            uiState.navigate(clearAndNavigate)
         }
 
         binding.skipButton.setOnClickListener {
             uiState = viewModel.skip()
             showUi.invoke()
-            uiState.navigate {
-                viewModel.clearBeforeGameOver()
-                (requireActivity() as GameNavigation).navigateFromGameScreen()
-            }
+            uiState.navigate(clearAndNavigate)
         }
 
         if (savedInstanceState == null) {

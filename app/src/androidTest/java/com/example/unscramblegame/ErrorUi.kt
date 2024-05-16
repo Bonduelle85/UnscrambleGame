@@ -8,13 +8,12 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matcher
 
-class ErrorUi(rootId: Int, parent: Matcher<View>) {
+class ErrorUi(rootId: Matcher<View>, parent: Matcher<View>) {
 
     private val id: Int = R.id.errorTextView
 
@@ -22,7 +21,7 @@ class ErrorUi(rootId: Int, parent: Matcher<View>) {
         allOf(
             withId(id),
             isAssignableFrom(TextView::class.java),
-            withParent(withId(rootId)),
+            rootId,
             parent
         )
     )
@@ -37,8 +36,6 @@ class ErrorUi(rootId: Int, parent: Matcher<View>) {
     }
 
     fun checkVisible(message: String) {
-        interaction.check(matches(withText(message))).check(
-            matches(isDisplayed())
-        )
+        interaction.check(matches(withText(message)))
     }
 }

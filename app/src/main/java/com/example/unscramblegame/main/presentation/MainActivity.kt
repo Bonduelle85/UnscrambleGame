@@ -10,6 +10,8 @@ import com.example.unscramblegame.game.presentation.GameNavigation
 import com.example.unscramblegame.game.presentation.GameScreen
 import com.example.unscramblegame.gameover.presentation.GameOverNavigation
 import com.example.unscramblegame.gameover.presentation.GameOverScreen
+import com.example.unscramblegame.load.presentation.LoadNavigation
+import com.example.unscramblegame.load.presentation.LoadScreen
 
 
 class MainActivity : AppCompatActivity(), Navigation, ManageViewModels {
@@ -41,14 +43,18 @@ class MainActivity : AppCompatActivity(), Navigation, ManageViewModels {
 }
 
 
-interface Navigation : GameNavigation, GameOverNavigation {
+interface Navigation : LoadNavigation, GameNavigation, GameOverNavigation {
     fun navigate(screen: Screen)
+
+    override fun navigateFromLoad() {
+        navigate(GameScreen)
+    }
 
     override fun navigateFromGameScreen() {
         navigate(GameOverScreen)
     }
 
     override fun navigateFromGameOverScreen() {
-        navigate(GameScreen)
+        navigate(LoadScreen)
     }
 }

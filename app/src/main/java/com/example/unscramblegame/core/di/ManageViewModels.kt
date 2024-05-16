@@ -4,6 +4,7 @@ package com.example.unscramblegame.core.di
 
 import com.example.unscramblegame.game.di.ProvideGameViewModel
 import com.example.unscramblegame.gameover.di.ProvideGameOverViewModel
+import com.example.unscramblegame.load.di.ProvideLoadViewModel
 import com.example.unscramblegame.main.di.ProvideMainViewModel
 import com.example.unscramblegame.main.presentation.MyViewModel
 
@@ -46,6 +47,7 @@ interface ProvideViewModel {
             var temp: ProvideViewModel = Error()
             temp = ProvideMainViewModel(core, temp)
             temp = ProvideGameViewModel(core, temp)
+            temp = ProvideLoadViewModel(core, temp)
             chain = ProvideGameOverViewModel(core, temp)
         }
 

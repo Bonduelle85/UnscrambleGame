@@ -5,8 +5,8 @@ import com.example.unscramblegame.R
 import com.example.unscramblegame.core.data.BooleanCache
 import com.example.unscramblegame.core.data.IntCache
 import com.example.unscramblegame.core.data.StringCache
-import com.example.unscramblegame.game.presentation.GameScreen
 import com.example.unscramblegame.gameover.presentation.Statistics
+import com.example.unscramblegame.load.presentation.LoadScreen
 
 class Core(context: Context) {
 
@@ -21,7 +21,7 @@ class Core(context: Context) {
     val incorrects = IntCache.Base(INCORRECTS, sharedPreferences)
     val skips = IntCache.Base(SKIPS, sharedPreferences)
     val lastScreen =
-        StringCache.Base(LAST_SCREEN, sharedPreferences, GameScreen::class.java.canonicalName)
+        StringCache.Base(LAST_SCREEN, sharedPreferences, LoadScreen::class.java.canonicalName!!)
 
 
     companion object {

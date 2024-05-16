@@ -1,19 +1,22 @@
 package com.example.unscramblegame
 
+import android.view.View
 import android.widget.LinearLayout
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withParent
+import org.hamcrest.Matcher
 
 class LoadPage {
 
-    private val rootId: Int = R.id.loadLayout
-    private val parent = withParent(isAssignableFrom(LinearLayout::class.java))
+    private val rootId: Matcher<View> = withParent(ViewMatchers.withId(R.id.gameLayout))
+    private val parentClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
 
-    private val errorUi = ErrorUi(rootId, parent)
-    private val progressUi = ProgressUi(rootId, parent)
-    private val retryUi = RetryUi(rootId, parent)
+    private val errorUi = ErrorUi(rootId, parentClass)
+    private val progressUi = ProgressUi(rootId, parentClass)
+    private val retryUi = RetryUi(rootId, parentClass)
 
     fun checkProgressState() {
         progressUi.checkVisible()

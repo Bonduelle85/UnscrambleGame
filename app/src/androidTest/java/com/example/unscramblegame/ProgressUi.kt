@@ -7,13 +7,12 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matcher
 
 
-class ProgressUi(rootId: Int, parent: Matcher<View>?) {
+class ProgressUi(rootId: Matcher<View>, parent: Matcher<View>?) {
 
     private val id: Int = R.id.progressBar
 
@@ -21,7 +20,7 @@ class ProgressUi(rootId: Int, parent: Matcher<View>?) {
         allOf(
             withId(id),
             isAssignableFrom(ProgressBar::class.java),
-            withParent(withId(rootId)),
+            rootId,
             parent
         )
     )

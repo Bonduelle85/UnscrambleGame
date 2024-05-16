@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.example.unscramblegame.core.di
 
 import com.example.unscramblegame.main.presentation.MyViewModel

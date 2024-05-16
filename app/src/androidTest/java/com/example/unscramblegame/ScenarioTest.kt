@@ -38,9 +38,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber1() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "animal")
         gamePage.checkMatchState()
@@ -75,9 +73,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber2() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "aminal")
         gamePage.checkMatchState()
@@ -114,9 +110,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber3() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.clickSkip()
         gamePage = GamePage(
@@ -140,9 +134,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber4() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "animal")
         gamePage.checkMatchState()
@@ -206,9 +198,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber5() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "anim")
         gamePage.checkInsufficientState()
@@ -237,9 +227,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber6() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "animal")
         gamePage.checkMatchState()
@@ -305,9 +293,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber7() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "animal")
         gamePage.checkMatchState()
@@ -369,9 +355,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber8() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.inputWord(text = "animla")
         gamePage.checkMatchState()
@@ -436,9 +420,7 @@ class ScenarioTest {
      */
     @Test
     fun caseNumber9() {
-        gamePage.checkQuestionState()
-        scenarioRule.scenario.recreate()
-        gamePage.checkQuestionState()
+        caseNumber10()
 
         gamePage.clickSkip()
 
@@ -458,5 +440,34 @@ class ScenarioTest {
         gameOverPage.check()
         scenarioRule.scenario.recreate()
         gameOverPage.check()
+    }
+
+    /**
+     * TestCase 10 (LoadPage)
+     * 1) progress -> error
+     * 2) click retry
+     * 3) progress -> success
+     */
+    @Test
+    fun caseNumber10() {
+        val loadPage = LoadPage()
+        loadPage.checkProgressState()
+        scenarioRule.scenario.recreate()
+        loadPage.checkProgressState()
+
+        loadPage.waitUntilError()
+        loadPage.checkErrorState(message = "No internet connection")
+        scenarioRule.scenario.recreate()
+        loadPage.checkErrorState(message = "No internet connection")
+
+        loadPage.clickRetry()
+        loadPage.checkProgressState()
+        scenarioRule.scenario.recreate()
+        loadPage.checkProgressState()
+
+        loadPage.waitUntilDisappear()
+        gamePage.checkQuestionState()
+        scenarioRule.scenario.recreate()
+        gamePage.checkQuestionState()
     }
 }

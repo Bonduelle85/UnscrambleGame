@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.example.unscramblegame.core.di
 
 import com.example.unscramblegame.game.di.ProvideGameViewModel
@@ -8,13 +10,12 @@ import com.example.unscramblegame.main.presentation.MyViewModel
 interface ManageViewModels : ClearViewModel, ProvideViewModel
 
 interface ClearViewModel {
-
     fun clear(clazz: Class<out MyViewModel>)
 }
 
 interface ProvideViewModel {
-
     fun <T : MyViewModel> viewModel(clazz: Class<T>): T
+
 
     class Factory(
         private val make: ProvideViewModel
@@ -35,6 +36,7 @@ interface ProvideViewModel {
                 mutableMap[clazz] as T
         }
     }
+
 
     class Make(core: Core) : ProvideViewModel {
 

@@ -1,7 +1,11 @@
 package com.example.unscramblegame
 
+import com.example.unscramblegame.load.data.LoadRepository
+import com.example.unscramblegame.load.data.LoadResult
 import com.example.unscramblegame.load.presentation.LoadUiState
-import org.junit.Assert.*
+import com.example.unscramblegame.load.presentation.LoadViewModel
+import com.example.unscramblegame.main.presentation.RunAsync
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LoadViewModelTest {
@@ -14,7 +18,8 @@ class LoadViewModelTest {
     @Test
     fun test() {
         val repository = FakeLoadRepository()
-        val viewModel = LoadViewModel(repository = repository)
+        val runAsync = FakeRunAsync()
+        val viewModel = LoadViewModel(repository = repository, runAsync)
         val showUi = FakeShowUi()
 
         viewModel.init(firstRun = true, showUi = showUi)
@@ -54,5 +59,13 @@ class FakeLoadRepository : LoadRepository {
             returnSuccess = true
             LoadResult.Error(message = "failed to fetch data")
         }
+    }
+}
+
+class FakeRunAsync : RunAsync {
+
+    override fun <T : Any> runAsync(background: () -> T, ui: (T) -> Unit) {
+        val result = background.invoke()
+        ui.invoke(result)
     }
 }

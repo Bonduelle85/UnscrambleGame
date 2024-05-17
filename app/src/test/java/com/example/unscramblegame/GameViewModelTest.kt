@@ -277,4 +277,7 @@ private class FakeGameRepository : GameRepository {
     override fun incrementSkips() {
         skips++
     }
+
+    override fun saveLastScreenIsGame() {
+    }
 }

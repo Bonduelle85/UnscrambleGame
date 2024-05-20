@@ -63,7 +63,18 @@ interface WordsService {
     ) : WordsService {
 
         private var showSuccess = false
-        private val response = listOf<String>("animal", "auto", "anecdote")
+        private val response = listOf(
+            "animal",
+            "auto",
+            "anecdote",
+            "alphabet",
+            "all",
+            "awesome",
+            "arise",
+            "balloon",
+            "basket",
+            "bench",
+        )
 
         override fun data(): String {
             Thread.sleep(1000)

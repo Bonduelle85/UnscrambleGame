@@ -9,19 +9,24 @@ class LoadViewModel(
     runAsync: RunAsync,
 ) : MyViewModel.Abstract(runAsync) {
 
-    fun init(firstRun: Boolean, showUi: (LoadUiState) -> Unit) {
+    private var showUiInner: (LoadUiState) -> Unit = {}
+
+    fun init(showUi: (LoadUiState) -> Unit) {
+        showUiInner = showUi
+    }
+
+    fun init(firstRun: Boolean) {
         if (firstRun) {
             repository.saveLastScreenIsLoad()
-            showUi.invoke(LoadUiState.Progress)
+            showUiInner.invoke(LoadUiState.Progress)
             runAsync(repository::load) { loadResult ->
-                val uiState = if (loadResult.isSuccessful())
-                    LoadUiState.Success
+                if (loadResult.isSuccessful())
+                    showUiInner.invoke(LoadUiState.Success)
                 else
-                    LoadUiState.Error(loadResult.message())
-                showUi.invoke(uiState)
+                    showUiInner.invoke(LoadUiState.Error(loadResult.message()))
             }
         }
     }
 
-    fun retry(showUi: (LoadUiState) -> Unit) = init(true, showUi)
+    fun retry() = init(true)
 }

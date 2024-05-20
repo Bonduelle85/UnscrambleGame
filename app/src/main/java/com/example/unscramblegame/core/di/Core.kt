@@ -11,9 +11,17 @@ import com.google.gson.Gson
 
 class Core(context: Context) {
 
+    val runUiTest: Boolean = false
+
     val gson = Gson()
+
+    val sharedPreferencesFileName =
+        if (runUiTest) "ui_test"
+        else context.getString(R.string.app_name)
+
     val sharedPreferences =
-        context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
+        context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+
     val statistics = Statistics.Base(context)
     val score = IntCache.Base(SCORE, sharedPreferences)
     val uiIndex = IntCache.Base(UI_INDEX, sharedPreferences, 1)

@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment
 import com.example.unscramblegame.core.di.ManageViewModels
 import com.example.unscramblegame.databinding.FragmentLoadBinding
 
-class LoadFragment : Fragment() {
+class LoadFragment : Fragment(), (LoadUiState) -> Unit {
 
     private var _binding: FragmentLoadBinding? = null
-    private val binding get() = _binding!!
+
+    //    private val binding get() = _binding!!
+    private val binding: FragmentLoadBinding
+        get() = _binding ?: throw RuntimeException("FragmentLoadBinding == null")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,47 +31,41 @@ class LoadFragment : Fragment() {
         val manageViewModels = activity as ManageViewModels
         val viewModel = manageViewModels.viewModel(LoadViewModel::class.java)
 
-        val exit = {
-            manageViewModels.clear(LoadViewModel::class.java)
-            (activity as LoadNavigation).navigateFromLoad()
-        }
+//        val exit = {
+//            manageViewModels.clear(LoadViewModel::class.java)
+//            (activity as LoadNavigation).navigateFromLoad()
+//        }
 
-        // delete
-        val exit1 = object : Exit {
-            override fun exit() {
-                manageViewModels.clear(LoadViewModel::class.java)
-                (activity as LoadNavigation).navigateFromLoad()
-            }
-        }
-
-
-        val showUi: (LoadUiState) -> Unit = { uiState ->
-            uiState.update(
-                progress = binding.progressBar,
-                error = binding.errorTextView,
-                retry = binding.retryButton
-            )
-            uiState.navigate(exit)
-        }
-
-        // delete
-        val showUi1 = object : ShowUiState {
-            override fun showUi(uiState: LoadUiState) {
-                uiState.update(
-                    progress = binding.progressBar,
-                    error = binding.errorTextView,
-                    retry = binding.retryButton
-                )
-                uiState.navigate(exit)
-            }
-
-        }
+//        val showUi: (LoadUiState) -> Unit = { uiState ->
+//            uiState.update(
+//                progress = binding.progressBar,
+//                error = binding.errorTextView,
+//                retry = binding.retryButton
+//            )
+//            uiState.navigate(exit)
+//        }
 
         binding.retryButton.setOnClickListener {
-            viewModel.retry(showUi)
+//            viewModel.retry(showUi)
+            viewModel.retry()
         }
 
-        viewModel.init(savedInstanceState == null, showUi)
+//        viewModel.init(savedInstanceState == null, showUi)
+        viewModel.init(showUi = this)
+        viewModel.init(firstRun = savedInstanceState == null)
+    }
+
+    override fun invoke(loadUiState: LoadUiState) {
+        loadUiState.update(
+            binding.progressBar,
+            binding.errorTextView,
+            binding.retryButton,
+        )
+        loadUiState.navigate {
+            val manageViewModels = requireActivity() as ManageViewModels
+            manageViewModels.clear(LoadViewModel::class.java)
+            (requireActivity() as LoadNavigation).navigateFromLoad()
+        }
     }
 
     override fun onDestroyView() {
@@ -79,15 +76,4 @@ class LoadFragment : Fragment() {
 
 interface LoadNavigation {
     fun navigateFromLoad()
-}
-
-
-// delete
-fun interface ShowUiState {
-    fun showUi(uiState: LoadUiState): Unit
-}
-
-// delete
-fun interface Exit {
-    fun exit(): Unit
 }

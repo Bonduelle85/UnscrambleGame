@@ -14,15 +14,14 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
     override fun viewModel(): GameViewModel = with(core) {
         return GameViewModel(
             GameRepository.Base(
-                score,
-                uiIndex,
-                currentIndex,
-                failed,
-                corrects,
-                incorrects,
-                skips,
-//                DataSource.Base(),
-                CacheDataSource.Base(
+                score = score,
+                uiIndex = uiIndex,
+                currentIndex = currentIndex,
+                failed = failed,
+                corrects = corrects,
+                incorrects = incorrects,
+                skips = skips,
+                cachedWords = CacheDataSource.Base(
                     StringCache.Base(
                         "GAME_DATA",
                         sharedPreferences,
@@ -30,8 +29,8 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
                     ),
                     gson
                 ),
-                max = 2,
-                lastScreen
+                max = 10,
+                lastScreen = lastScreen
             )
         )
     }

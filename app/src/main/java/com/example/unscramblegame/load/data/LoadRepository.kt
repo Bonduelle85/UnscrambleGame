@@ -2,6 +2,7 @@ package com.example.unscramblegame.load.data
 
 import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.load.presentation.LoadScreen
+import java.net.UnknownHostException
 
 interface LoadRepository {
 
@@ -20,7 +21,11 @@ interface LoadRepository {
                 cacheDataSource.save(data)
                 LoadResult.Success
             } catch (e: Exception) {
-                LoadResult.Error(e.message ?: "Load Repository Error")
+                if (e is UnknownHostException || e is java.net.ConnectException) {
+                    LoadResult.Error(message = "No internet connection")
+                } else {
+                    LoadResult.Error(message = e.message ?: "Load Repository Error")
+                }
             }
         }
 

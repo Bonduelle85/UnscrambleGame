@@ -22,19 +22,20 @@ class LoadViewModelTest {
         val viewModel = LoadViewModel(repository = repository, runAsync)
         val showUi = FakeShowUi()
 
-        viewModel.init(firstRun = true, showUi = showUi)
-
+        // first run -> Progress, Error
+        viewModel.init(showUi = showUi)
+        viewModel.init(firstRun = true)
         assertEquals(LoadUiState.Progress, showUi.uiStateList[0])
-        assertEquals(LoadUiState.Error(message = "failed to fetch data"), showUi.uiStateList[1])
+        assertEquals(true, repository.saveLastScreenIsCalled)
 
-        viewModel.retry(showUi = showUi)
-
+        // retry -> Progress, Success
+        viewModel.retry()
         assertEquals(LoadUiState.Progress, showUi.uiStateList[2])
         assertEquals(LoadUiState.Success, showUi.uiStateList[3])
 
-        //change configuration (rotate screen)
+        // change configuration (rotate screen)
         assertEquals(4, showUi.uiStateList.size)
-        viewModel.init(firstRun = false, showUi = showUi)
+        viewModel.init(firstRun = false)
         assertEquals(4, showUi.uiStateList.size)
     }
 }
@@ -51,6 +52,7 @@ class FakeShowUi : (LoadUiState) -> Unit {
 class FakeLoadRepository : LoadRepository {
 
     private var returnSuccess = false
+    var saveLastScreenIsCalled = false
 
     override fun load(): LoadResult {
         return if (returnSuccess)
@@ -59,6 +61,10 @@ class FakeLoadRepository : LoadRepository {
             returnSuccess = true
             LoadResult.Error(message = "failed to fetch data")
         }
+    }
+
+    override fun saveLastScreenIsLoad() {
+        saveLastScreenIsCalled = true
     }
 }
 

@@ -27,14 +27,12 @@ interface GameRepository {
         private val corrects: IntCache,
         private val incorrects: IntCache,
         private val skips: IntCache,
-//        dataSource: DataSource,
-        private val cacheDataSource: CacheDataSource,
+        cachedWords: CacheDataSource,
         private val max: Int,
         private val lastScreen: StringCache
     ) : GameRepository {
 
-        //        private val list = dataSource.data()
-        private val list = cacheDataSource.read()
+        private val list = cachedWords.read()
 
         override fun currentWord(): String {
             return list[currentIndex.read()]

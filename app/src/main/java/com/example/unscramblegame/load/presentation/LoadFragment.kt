@@ -52,12 +52,12 @@ class LoadFragment : Fragment(), (LoadUiState) -> Unit {
 
     override fun onPause() {
         super.onPause()
-        viewModel.stopUpdates()
+        viewModel.stopGettingUpdates()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.startUpdates(this)
+        viewModel.startGettingUpdates(this)
     }
 
     override fun onDestroyView() {

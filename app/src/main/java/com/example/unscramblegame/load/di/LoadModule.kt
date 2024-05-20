@@ -11,6 +11,7 @@ import com.example.unscramblegame.load.data.ListWrapper
 import com.example.unscramblegame.load.data.LoadRepository
 import com.example.unscramblegame.load.data.WordsService
 import com.example.unscramblegame.load.presentation.LoadViewModel
+import com.example.unscramblegame.load.presentation.UiObservable
 import com.example.unscramblegame.main.presentation.RunAsync
 
 class LoadModule(
@@ -19,6 +20,7 @@ class LoadModule(
 
     override fun viewModel(): LoadViewModel = with(core) {
         return LoadViewModel(
+            UiObservable.Base(),
             LoadRepository.Base(
                 lastScreen,
                 CloudDataSource.Base(

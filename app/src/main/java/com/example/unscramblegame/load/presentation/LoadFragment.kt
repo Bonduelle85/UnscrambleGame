@@ -11,10 +11,9 @@ import com.example.unscramblegame.databinding.FragmentLoadBinding
 class LoadFragment : Fragment(), (LoadUiState) -> Unit {
 
     private var _binding: FragmentLoadBinding? = null
-
-    //    private val binding get() = _binding!!
     private val binding: FragmentLoadBinding
         get() = _binding ?: throw RuntimeException("FragmentLoadBinding == null")
+    private lateinit var viewModel: LoadViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,29 +28,12 @@ class LoadFragment : Fragment(), (LoadUiState) -> Unit {
         super.onViewCreated(view, savedInstanceState)
 
         val manageViewModels = activity as ManageViewModels
-        val viewModel = manageViewModels.viewModel(LoadViewModel::class.java)
-
-//        val exit = {
-//            manageViewModels.clear(LoadViewModel::class.java)
-//            (activity as LoadNavigation).navigateFromLoad()
-//        }
-
-//        val showUi: (LoadUiState) -> Unit = { uiState ->
-//            uiState.update(
-//                progress = binding.progressBar,
-//                error = binding.errorTextView,
-//                retry = binding.retryButton
-//            )
-//            uiState.navigate(exit)
-//        }
+        viewModel = manageViewModels.viewModel(LoadViewModel::class.java)
 
         binding.retryButton.setOnClickListener {
-//            viewModel.retry(showUi)
             viewModel.retry()
         }
 
-//        viewModel.init(savedInstanceState == null, showUi)
-        viewModel.init(showUi = this)
         viewModel.init(firstRun = savedInstanceState == null)
     }
 
@@ -66,6 +48,16 @@ class LoadFragment : Fragment(), (LoadUiState) -> Unit {
             manageViewModels.clear(LoadViewModel::class.java)
             (requireActivity() as LoadNavigation).navigateFromLoad()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopUpdates()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startUpdates(this)
     }
 
     override fun onDestroyView() {

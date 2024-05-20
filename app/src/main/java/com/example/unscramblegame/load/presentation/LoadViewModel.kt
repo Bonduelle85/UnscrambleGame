@@ -9,24 +9,41 @@ class LoadViewModel(
     runAsync: RunAsync,
 ) : MyViewModel.Abstract(runAsync) {
 
-    private var showUiInner: (LoadUiState) -> Unit = {}
-
-    fun init(showUi: (LoadUiState) -> Unit) {
-        showUiInner = showUi
-    }
+    private var showUi: ((LoadUiState) -> Unit)? = null
+    private var cache: LoadUiState? = null
 
     fun init(firstRun: Boolean) {
         if (firstRun) {
             repository.saveLastScreenIsLoad()
-            showUiInner.invoke(LoadUiState.Progress)
+            updateUiInner(LoadUiState.Progress)
             runAsync(repository::load) { loadResult ->
                 if (loadResult.isSuccessful())
-                    showUiInner.invoke(LoadUiState.Success)
+                    updateUiInner(LoadUiState.Success)
                 else
-                    showUiInner.invoke(LoadUiState.Error(loadResult.message()))
+                    updateUiInner(LoadUiState.Error(loadResult.message()))
             }
         }
     }
 
+    fun updateUiInner(uiState: LoadUiState) {
+        if (showUi != null) {
+            showUi!!.invoke(uiState)
+        } else {
+            cache = uiState
+        }
+    }
+
     fun retry() = init(true)
+
+    fun stopUpdates() {
+        showUi = null
+    }
+
+    fun startUpdates(loadFragment: (LoadUiState) -> Unit) {
+        showUi = loadFragment
+        if (cache != null) {
+            showUi!!.invoke(cache!!)
+            cache = null
+        }
+    }
 }

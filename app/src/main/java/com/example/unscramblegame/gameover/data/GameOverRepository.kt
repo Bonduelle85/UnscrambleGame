@@ -50,7 +50,7 @@ interface GameOverRepository {
         }
 
         override fun saveLastScreenIsGameOver() {
-            lastScreen.save(GameOverScreen::class.java.canonicalName)
+            lastScreen.save(GameOverScreen::class.java.canonicalName!!)
         }
     }
 }

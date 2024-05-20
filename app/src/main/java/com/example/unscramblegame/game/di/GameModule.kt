@@ -1,12 +1,13 @@
 package com.example.unscramblegame.game.di
 
-import com.example.unscramblegame.core.data.DataSource
+import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.core.di.Core
 import com.example.unscramblegame.core.di.Module
 import com.example.unscramblegame.core.di.ProvideAbstract
 import com.example.unscramblegame.core.di.ProvideViewModel
 import com.example.unscramblegame.game.data.GameRepository
 import com.example.unscramblegame.game.presentation.GameViewModel
+import com.example.unscramblegame.load.data.CacheDataSource
 
 class GameModule(private val core: Core) : Module<GameViewModel> {
 
@@ -20,7 +21,15 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
                 corrects,
                 incorrects,
                 skips,
-                DataSource.Base(),
+//                DataSource.Base(),
+                CacheDataSource.Base(
+                    StringCache.Base(
+                        "GAME_DATA",
+                        sharedPreferences,
+                        gson.toJson(emptyList<String>())
+                    ),
+                    gson
+                ),
                 max = 2,
                 lastScreen
             )

@@ -11,6 +11,7 @@ class LoadViewModel(
 
     fun init(firstRun: Boolean, showUi: (LoadUiState) -> Unit) {
         if (firstRun) {
+            repository.saveLastScreenIsLoad()
             showUi.invoke(LoadUiState.Progress)
             runAsync(repository::load) { loadResult ->
                 val uiState = if (loadResult.isSuccessful())

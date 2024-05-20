@@ -7,9 +7,11 @@ import com.example.unscramblegame.core.data.IntCache
 import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.gameover.presentation.Statistics
 import com.example.unscramblegame.load.presentation.LoadScreen
+import com.google.gson.Gson
 
 class Core(context: Context) {
 
+    val gson = Gson()
     val sharedPreferences =
         context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
     val statistics = Statistics.Base(context)

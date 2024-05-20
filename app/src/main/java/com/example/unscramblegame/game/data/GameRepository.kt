@@ -1,10 +1,10 @@
 package com.example.unscramblegame.game.data
 
 import com.example.unscramblegame.core.data.BooleanCache
-import com.example.unscramblegame.core.data.DataSource
 import com.example.unscramblegame.core.data.IntCache
 import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.game.presentation.GameScreen
+import com.example.unscramblegame.load.data.CacheDataSource
 
 interface GameRepository {
 
@@ -27,12 +27,14 @@ interface GameRepository {
         private val corrects: IntCache,
         private val incorrects: IntCache,
         private val skips: IntCache,
-        dataSource: DataSource,
+//        dataSource: DataSource,
+        private val cacheDataSource: CacheDataSource,
         private val max: Int,
         private val lastScreen: StringCache
     ) : GameRepository {
 
-        private val list = dataSource.data()
+        //        private val list = dataSource.data()
+        private val list = cacheDataSource.read()
 
         override fun currentWord(): String {
             return list[currentIndex.read()]
@@ -91,7 +93,7 @@ interface GameRepository {
         }
 
         override fun saveLastScreenIsGame() {
-            lastScreen.save(GameScreen::class.java.canonicalName)
+            lastScreen.save(GameScreen::class.java.canonicalName!!)
         }
     }
 }

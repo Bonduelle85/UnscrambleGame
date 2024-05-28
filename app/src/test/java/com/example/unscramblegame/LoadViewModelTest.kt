@@ -4,7 +4,10 @@ import com.example.unscramblegame.load.data.LoadRepository
 import com.example.unscramblegame.load.data.LoadResult
 import com.example.unscramblegame.load.presentation.LoadUiState
 import com.example.unscramblegame.load.presentation.LoadViewModel
+import com.example.unscramblegame.load.presentation.UiObservable
 import com.example.unscramblegame.main.presentation.RunAsync
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -19,11 +22,12 @@ class LoadViewModelTest {
     fun test() {
         val repository = FakeLoadRepository()
         val runAsync = FakeRunAsync()
-        val viewModel = LoadViewModel(repository = repository, runAsync)
+        val uiObservable = FakeUiObservable()
+        val viewModel =
+            LoadViewModel(uiObservable = uiObservable, repository = repository, runAsync = runAsync)
         val showUi = FakeShowUi()
 
         // first run -> Progress, Error
-        viewModel.init(showUi = showUi)
         viewModel.init(firstRun = true)
         assertEquals(LoadUiState.Progress, showUi.uiStateList[0])
         assertEquals(true, repository.saveLastScreenIsCalled)
@@ -54,7 +58,7 @@ class FakeLoadRepository : LoadRepository {
     private var returnSuccess = false
     var saveLastScreenIsCalled = false
 
-    override fun load(): LoadResult {
+    override suspend fun load(): LoadResult {
         return if (returnSuccess)
             LoadResult.Success
         else {
@@ -70,8 +74,34 @@ class FakeLoadRepository : LoadRepository {
 
 class FakeRunAsync : RunAsync {
 
-    override fun <T : Any> runAsync(background: () -> T, ui: (T) -> Unit) {
+//    override fun <T : Any> runAsync(background: () -> T, ui: (T) -> Unit) {
+//        val result = background.invoke()
+//        ui.invoke(result)
+//    }
+
+    override fun <T : Any> runAsync(
+        coroutineScope: CoroutineScope,
+        background: suspend () -> T,
+        ui: (T) -> Unit
+    ) = runBlocking {
         val result = background.invoke()
         ui.invoke(result)
     }
+
+    override fun cancelLastJob() {}
+}
+
+class FakeUiObservable : UiObservable {
+    override fun updateObserver(observer: (LoadUiState) -> Unit) {
+
+    }
+
+    override fun clearObserver() {
+
+    }
+
+    override fun updateUiState(uiState: LoadUiState) {
+
+    }
+
 }

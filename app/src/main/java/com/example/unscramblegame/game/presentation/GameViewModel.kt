@@ -7,6 +7,15 @@ class GameViewModel(
     private val repository: GameRepository
 ) : MyViewModel {
 
+    fun init(): GameUiState {
+        repository.saveLastScreenIsGame()
+        return GameUiState.Question(
+            counter = repository.currentCounter(),
+            word = repository.currentWord().reversed(),
+            score = repository.currentScore()
+        )
+    }
+
     fun clearBeforeGameOver() {
         repository.reset()
     }
@@ -31,12 +40,4 @@ class GameViewModel(
     else
         GameUiState.InsufficientInput
 
-    fun init(): GameUiState {
-        repository.saveLastScreenIsGame()
-        return GameUiState.Question(
-            counter = repository.currentCounter(),
-            word = repository.currentWord().reversed(),
-            score = repository.currentScore()
-        )
-    }
 }

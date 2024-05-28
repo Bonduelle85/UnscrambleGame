@@ -22,6 +22,10 @@ class ErrorTextView : androidx.appcompat.widget.AppCompatTextView, UpdateError {
             state.save(uiState)
             return state
         }
+        // val superState = super.onSaveInstanceState()!!
+        // val savedState = ErrorSavedState(superState)
+        // savedState.save(uiState)
+        // return savedState
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {

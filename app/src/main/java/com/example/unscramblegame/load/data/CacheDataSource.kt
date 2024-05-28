@@ -6,7 +6,7 @@ import java.io.Serializable
 
 interface CacheDataSource {
 
-    fun save(data: List<String>)
+    suspend fun save(data: List<String>)
 
     fun read(): List<String>
 
@@ -15,19 +15,14 @@ interface CacheDataSource {
         private val gson: Gson
     ) : CacheDataSource {
 
-        override fun save(data: List<String>) {
+        override suspend fun save(data: List<String>) {
             val serialisedWrapper = gson.toJson(ListWrapper(data))
             stringCache.save(serialisedWrapper)
-
-            // val stringFromList = data.joinToString(",")
-            // stringCache.save(stringFromList)
         }
 
         override fun read(): List<String> {
             val serialisedWrapper = stringCache.read()
             return gson.fromJson(serialisedWrapper, ListWrapper::class.java).list
-
-            // return stringCache.read().split(",")
         }
     }
 }

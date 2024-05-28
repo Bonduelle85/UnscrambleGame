@@ -39,9 +39,9 @@ interface GameUiState : Serializable {
             inputView: InputAction
         ) {
             submitView.changeEnabled(false)
-            counterView.update(counter)
-            wordView.update(word)
-            scoreView.update(score)
+            counterView.updateText(counter)
+            wordView.updateText(word)
+            scoreView.updateText(score)
             inputView.updateState(InputUiState.Initial)
         }
     }

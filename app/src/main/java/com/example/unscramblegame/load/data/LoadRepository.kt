@@ -6,7 +6,7 @@ import java.net.UnknownHostException
 
 interface LoadRepository {
 
-    fun load(): LoadResult
+    suspend fun load(): LoadResult
     fun saveLastScreenIsLoad()
 
     class Base(
@@ -14,7 +14,7 @@ interface LoadRepository {
         private val cloudDataSource: CloudDataSource,
         private val cacheDataSource: CacheDataSource,
     ) : LoadRepository {
-        override fun load(): LoadResult {
+        override suspend fun load(): LoadResult {
 
             return try {
                 val data = cloudDataSource.data()

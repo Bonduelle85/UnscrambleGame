@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 java {
@@ -39,6 +40,11 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.room:room-ktx:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
+    androidTestImplementation("androidx.room:room-testing:2.5.2")
+
     implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

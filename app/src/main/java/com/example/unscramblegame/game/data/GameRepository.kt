@@ -4,10 +4,11 @@ import com.example.unscramblegame.core.data.BooleanCache
 import com.example.unscramblegame.core.data.IntCache
 import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.game.presentation.GameScreen
-import com.example.unscramblegame.load.data.CacheDataSource
+import com.example.unscramblegame.load.data.cache.CacheDataSource
 
 interface GameRepository {
 
+    suspend fun updateCurrentWord()
     fun currentWord(): String
     fun currentScore(): String
     fun currentCounter(): String
@@ -20,6 +21,7 @@ interface GameRepository {
     fun saveLastScreenIsGame()
 
     class Base(
+        private val max: Int,
         private val score: IntCache,
         private val uiIndex: IntCache,
         private val currentIndex: IntCache,
@@ -27,16 +29,17 @@ interface GameRepository {
         private val corrects: IntCache,
         private val incorrects: IntCache,
         private val skips: IntCache,
-        cachedWords: CacheDataSource,
-        private val max: Int,
+        private val cachedWords: CacheDataSource,
         private val lastScreen: StringCache
     ) : GameRepository {
 
-        private val list = cachedWords.read()
+        private lateinit var cachedWord: String
 
-        override fun currentWord(): String {
-            return list[currentIndex.read()]
+        override suspend fun updateCurrentWord() {
+            cachedWord = cachedWords.read(currentIndex.read())
         }
+
+        override fun currentWord() = cachedWord
 
         override fun currentScore(): String {
             return score.read().toString()
@@ -47,11 +50,11 @@ interface GameRepository {
         }
 
         override fun sameLength(userInput: String): Boolean {
-            return userInput.length == currentWord().length
+            return userInput.length == cachedWord.length
         }
 
         override fun check(userInput: String): Boolean {
-            return if (currentWord().equals(userInput, ignoreCase = true)) {
+            return if (cachedWord.equals(userInput, ignoreCase = true)) {
                 val oldScore = score.read()
                 val newScore = oldScore + if (failed.read()) 10 else 20
                 score.save(newScore)
@@ -71,7 +74,7 @@ interface GameRepository {
         override fun next() {
             currentIndex.save(currentIndex.read() + 1)
 
-            if (currentIndex.read() == list.size)
+            if (currentIndex.read() == max)
                 currentIndex.save(0)
             uiIndex.save(uiIndex.read() + 1)
             failed.save(false)
@@ -79,7 +82,7 @@ interface GameRepository {
 
         override fun reset() {
             currentIndex.save(currentIndex.read() + 1)
-            if (currentIndex.read() == list.size)
+            if (currentIndex.read() == max)
                 currentIndex.save(0)
 
             uiIndex.save(1)
@@ -91,7 +94,7 @@ interface GameRepository {
         }
 
         override fun saveLastScreenIsGame() {
-            lastScreen.save(GameScreen::class.java.canonicalName!!)
+            GameScreen::class.java.canonicalName?.let { lastScreen.save(it) }
         }
     }
 }

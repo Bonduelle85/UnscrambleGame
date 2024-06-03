@@ -6,14 +6,18 @@ import com.example.unscramblegame.core.data.BooleanCache
 import com.example.unscramblegame.core.data.IntCache
 import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.gameover.presentation.Statistics
+import com.example.unscramblegame.load.data.cache.CacheModule
 import com.example.unscramblegame.load.presentation.LoadScreen
-import com.google.gson.Gson
+import com.example.unscramblegame.main.presentation.RunAsync
 
 class Core(context: Context) {
 
-    val runUiTest: Boolean = false
+    val cacheModule: CacheModule = CacheModule.Base(context)
 
-    val gson = Gson()
+    val runUiTest: Boolean = false
+    val max: Int = 10
+
+    val runAsync = RunAsync.Base()
 
     val sharedPreferencesFileName =
         if (runUiTest) "ui_test"

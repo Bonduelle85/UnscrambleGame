@@ -1,4 +1,4 @@
-package com.example.unscramblegame.load.data
+package com.example.unscramblegame.load.data.cloud
 
 import okhttp3.Request
 import okio.Timeout
@@ -15,7 +15,7 @@ interface WordService {
 
     @GET("word")
     fun data(
-        @Query("number") number: Int = 10,
+        @Query("number") number: Int,
     ): Call<List<String>>
 }
 

@@ -1,19 +1,21 @@
 package com.example.unscramblegame.game.di
 
-import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.core.di.Core
 import com.example.unscramblegame.core.di.Module
 import com.example.unscramblegame.core.di.ProvideAbstract
 import com.example.unscramblegame.core.di.ProvideViewModel
 import com.example.unscramblegame.game.data.GameRepository
+import com.example.unscramblegame.game.presentation.GameUiObservable
 import com.example.unscramblegame.game.presentation.GameViewModel
-import com.example.unscramblegame.load.data.CacheDataSource
+import com.example.unscramblegame.load.data.cache.CacheDataSource
 
 class GameModule(private val core: Core) : Module<GameViewModel> {
 
     override fun viewModel(): GameViewModel = with(core) {
         return GameViewModel(
-            GameRepository.Base(
+            runAsync = core.runAsync,
+            repository = GameRepository.Base(
+                max = core.max,
                 score = score,
                 uiIndex = uiIndex,
                 currentIndex = currentIndex,
@@ -22,16 +24,11 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
                 incorrects = incorrects,
                 skips = skips,
                 cachedWords = CacheDataSource.Base(
-                    StringCache.Base(
-                        "GAME_DATA",
-                        sharedPreferences,
-                        gson.toJson(emptyList<String>())
-                    ),
-                    gson
+                    cacheModule.database().dao()
                 ),
-                max = 10,
                 lastScreen = lastScreen
-            )
+            ),
+            uiObservable = GameUiObservable.Base()
         )
     }
 }

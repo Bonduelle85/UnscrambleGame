@@ -1,5 +1,6 @@
 package com.example.unscramblegame.load.presentation
 
+import com.example.unscramblegame.core.presentation.UiState
 import com.example.unscramblegame.load.views.error.ErrorUiState
 import com.example.unscramblegame.load.views.error.UpdateError
 import com.example.unscramblegame.load.views.progress.ProgressUiState
@@ -7,7 +8,7 @@ import com.example.unscramblegame.load.views.progress.UpdateProgress
 import com.example.unscramblegame.load.views.retry.RetryUiState
 import com.example.unscramblegame.load.views.retry.UpdateRetry
 
-interface LoadUiState {
+interface LoadUiState : UiState {
 
     fun update(progress: UpdateProgress, error: UpdateError, retry: UpdateRetry)
     fun navigate(exit: () -> Unit)

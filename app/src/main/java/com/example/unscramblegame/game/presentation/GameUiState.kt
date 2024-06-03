@@ -1,13 +1,14 @@
 package com.example.unscramblegame.game.presentation
 
 import com.example.unscramblegame.R
+import com.example.unscramblegame.core.presentation.UiState
 import com.example.unscramblegame.core.views.input.InputAction
 import com.example.unscramblegame.core.views.input.InputUiState
 import com.example.unscramblegame.core.views.submit.UpdateSubmitButton
 import com.example.unscramblegame.core.views.word.UpdateText
 import java.io.Serializable
 
-interface GameUiState : Serializable {
+interface GameUiState : UiState, Serializable {
 
     fun update(
         counterView: UpdateText,

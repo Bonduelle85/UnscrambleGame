@@ -28,10 +28,6 @@ interface MyViewModel {
 
         private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-//        override fun <T : Any> runAsync(background: () -> T, ui: (T) -> Unit) {
-//            runAsync.runAsync(background, ui)
-//        }
-
         protected fun <T : Any> runAsync(background: suspend () -> T, ui: (T) -> Unit) {
             runAsync.runAsync(viewModelScope, background, ui)
         }
@@ -44,7 +40,6 @@ interface MyViewModel {
 
 interface RunAsync {
 
-    //    fun <T : Any> runAsync(background: () -> T, ui: (T) -> Unit)
     fun <T : Any> runAsync(
         coroutineScope: CoroutineScope,
         background: suspend () -> T,
@@ -54,15 +49,6 @@ interface RunAsync {
     fun cancelLastJob()
 
     class Base : RunAsync {
-
-//        override fun <T : Any> runAsync(background: () -> T, ui: (T) -> Unit) {
-//            Thread {
-//                val result: T = background.invoke()
-//                Handler(Looper.getMainLooper()).post {
-//                    ui.invoke(result)
-//                }
-//            }.start()
-//        }
 
         protected var job: Job? = null
 

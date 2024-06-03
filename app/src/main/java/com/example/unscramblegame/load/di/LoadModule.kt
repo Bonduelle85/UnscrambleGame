@@ -1,19 +1,16 @@
 package com.example.unscramblegame.load.di
 
-import com.example.unscramblegame.core.data.StringCache
 import com.example.unscramblegame.core.di.Core
 import com.example.unscramblegame.core.di.Module
 import com.example.unscramblegame.core.di.ProvideAbstract
 import com.example.unscramblegame.core.di.ProvideViewModel
-import com.example.unscramblegame.load.data.CacheDataSource
-import com.example.unscramblegame.load.data.CloudDataSource
-import com.example.unscramblegame.load.data.FakeService
-import com.example.unscramblegame.load.data.ListWrapper
 import com.example.unscramblegame.load.data.LoadRepository
-import com.example.unscramblegame.load.data.WordService
+import com.example.unscramblegame.load.data.cache.CacheDataSource
+import com.example.unscramblegame.load.data.cloud.CloudDataSource
+import com.example.unscramblegame.load.data.cloud.FakeService
+import com.example.unscramblegame.load.data.cloud.WordService
+import com.example.unscramblegame.load.presentation.LoadUiObservable
 import com.example.unscramblegame.load.presentation.LoadViewModel
-import com.example.unscramblegame.load.presentation.UiObservable
-import com.example.unscramblegame.main.presentation.RunAsync
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,10 +22,11 @@ class LoadModule(
 
     override fun viewModel(): LoadViewModel = with(core) {
         return LoadViewModel(
-            UiObservable.Base(),
-            LoadRepository.Base(
+            uiObservable = LoadUiObservable.Base(),
+            repository = LoadRepository.Base(
                 lastScreen,
                 cloudDataSource = CloudDataSource.Base(
+                    max = core.max,
                     if (core.runUiTest)
                         FakeService()
                     else
@@ -46,15 +44,10 @@ class LoadModule(
                             .create(WordService::class.java)
                 ),
                 CacheDataSource.Base(
-                    StringCache.Base(
-                        "GAME_DATA",
-                        sharedPreferences,
-                        gson.toJson(ListWrapper(emptyList()))
-                    ),
-                    gson
+                    cacheModule.database().dao()
                 )
             ),
-            RunAsync.Base()
+            runAsync = core.runAsync
         )
     }
 }

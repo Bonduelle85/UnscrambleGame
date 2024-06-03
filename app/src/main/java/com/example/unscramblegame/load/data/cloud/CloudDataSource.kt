@@ -1,4 +1,4 @@
-package com.example.unscramblegame.load.data
+package com.example.unscramblegame.load.data.cloud
 
 import retrofit2.Call
 import java.net.UnknownHostException
@@ -7,10 +7,13 @@ interface CloudDataSource {
 
     suspend fun data(): List<String>
 
-    class Base(private val newService: WordService) : CloudDataSource {
+    class Base(
+        private val max: Int,
+        private val newService: WordService,
+    ) : CloudDataSource {
         override suspend fun data(): List<String> {
             try {
-                val data: Call<List<String>> = newService.data()
+                val data: Call<List<String>> = newService.data(max)
                 return data.execute().body()!!
             } catch (e: Exception) {
                 if (e is UnknownHostException)

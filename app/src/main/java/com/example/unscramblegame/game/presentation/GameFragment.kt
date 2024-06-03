@@ -15,17 +15,8 @@ class GameFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: GameViewModel
-    private lateinit var uiState: GameUiState
 
-    private val showUi: () -> Unit = {
-        uiState.update(
-            counterView = binding.counterTextView,
-            wordView = binding.wordTextView,
-            scoreView = binding.scoreTextView,
-            submitView = binding.submitButton,
-            inputView = binding.customInput,
-        )
-    }
+    private lateinit var showUi: (GameUiState) -> Unit
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,30 +39,41 @@ class GameFragment : Fragment() {
             (requireActivity() as GameNavigation).navigateFromGameScreen()
         }
 
-        binding.submitButton.setOnClickListener {
-            uiState = viewModel.submit(guess = binding.customInput.getText())
-            showUi.invoke()
+        showUi = { uiState ->
+            uiState.update(
+                counterView = binding.counterTextView,
+                wordView = binding.wordTextView,
+                scoreView = binding.scoreTextView,
+                submitView = binding.submitButton,
+                inputView = binding.customInput,
+            )
             uiState.navigate(clearAndNavigate)
+        }
+
+        binding.submitButton.setOnClickListener {
+            viewModel.submit(guess = binding.customInput.getText())
         }
 
         binding.skipButton.setOnClickListener {
-            uiState = viewModel.skip()
-            showUi.invoke()
-            uiState.navigate(clearAndNavigate)
+            viewModel.skip()
         }
 
-        if (savedInstanceState == null) {
-            uiState = viewModel.init()
-            showUi.invoke()
-        }
+
+        viewModel.init(savedInstanceState == null)
     }
 
     override fun onResume() {
         super.onResume()
+        viewModel.startGettingUpdates(observer = showUi)
+
         binding.customInput.addTextChangedListener {
-            uiState = viewModel.checkUserInput(guess = it.toString())
-            showUi.invoke()
+            viewModel.checkUserInput(guess = it.toString())
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopGettingUpdates()
     }
 
     override fun onDestroyView() {

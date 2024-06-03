@@ -1,4 +1,4 @@
-package com.example.unscramblegame
+package com.example.unscramblegame.ui
 
 import android.view.View
 import androidx.test.espresso.matcher.BoundedMatcher

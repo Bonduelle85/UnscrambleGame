@@ -1,4 +1,4 @@
-package com.example.unscramblegame
+package com.example.unscramblegame.ui
 
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule

@@ -1,4 +1,4 @@
-package com.example.unscramblegame
+package com.example.unscramblegame.ui
 
 import android.view.View
 import androidx.test.espresso.Espresso.onView
@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.example.unscramblegame.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Matcher

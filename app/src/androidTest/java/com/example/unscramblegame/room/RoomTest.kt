@@ -42,25 +42,29 @@ class RoomTest {
      */
     @Test
     fun test() = runBlocking {
-        dao.save(
-            listOf(
-                WordCache(1, "123"),
-                WordCache(2, "456"),
-                WordCache(3, "789"),
-            )
-        )
+        val word1 = WordCache(1, "123")
+        val word2 = WordCache(2, "456")
+        val word3 = WordCache(3, "789")
+        dao.save(listOf(word1, word2, word3))
 
         assertEquals(
-            WordCache(1, "123").word,
+            word1.word,
             dao.read(1)
         )
         assertEquals(
-            WordCache(2, "456").word,
+            word2.word,
             dao.read(2)
         )
         assertEquals(
-            WordCache(3, "789").word,
+            word3.word,
             dao.read(3)
         )
+
+        val wordNew1 = WordCache(1, "123")
+        val wordNew2 = WordCache(2, "456")
+        dao.save(listOf(wordNew1, wordNew2))
+        assertEquals(wordNew1.word, dao.read(1))
+        assertEquals(wordNew2.word, dao.read(2))
+        assertEquals(word3.word, dao.read(3))
     }
 }
